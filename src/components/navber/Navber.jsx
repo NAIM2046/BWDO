@@ -80,7 +80,7 @@ const NavBar = () => {
                         <div
                           className={`px-3 py-2 xl:px-4 xl:py-2 rounded-2xl flex items-center gap-1 font-semibold cursor-pointer transition-all duration-300 text-sm xl:text-base ${
                             activeSubmenu === item.label
-                              ? "bg-primary text-green-700 shadow-md scale-105"
+                              ? "bg-gray-100 text-green-700 shadow-md scale-105"
                               : "hover:bg-gray-100 hover:text-primary"
                           }`}
                         >
@@ -126,7 +126,7 @@ const NavBar = () => {
                         href={item.href}
                         className={`px-3 py-2 xl:px-4 xl:py-2 hover:text-green-600 rounded-2xl font-bold flex items-center gap-2 transition-all duration-300 text-sm xl:text-base ${
                           activeSubmenu === item.label
-                            ? "bg-primary shadow-md scale-105"
+                            ? "bg-gray-100 shadow-md scale-105"
                             : "hover:text-primary hover:text-green-600"
                         }`}
                       >

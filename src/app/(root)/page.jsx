@@ -1,7 +1,11 @@
+import FocusArea from "@/components/ourfouceArea/FocusArea";
+import Slider from "@/components/slider/Slider";
+
 export default function Home() {
   return (
     <div>
-      <h1> BWDO</h1>
+      <Slider></Slider>
+      <FocusArea></FocusArea>
     </div>
   );
 }

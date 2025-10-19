@@ -14,7 +14,7 @@ const DonateButton = () => {
       className="
         /* Base Styles */
         inline-flex items-center justify-center
-        px-4 py-3 md:px-4 md:py-4 lg:px-8 lg:py-4
+        px-4 py-3 md:px-4 md:py-4 lg:px-4 lg:py-2
         bg-gradient-to-r from-green-500 to-emerald-600 
         hover:from-green-600 hover:to-emerald-700
         active:from-green-700 active:to-emerald-800
@@ -27,7 +27,7 @@ const DonateButton = () => {
         relative overflow-hidden
         group
         w-full lg:w-auto
-        min-h-[50px] md:min-h-[60px]
+        min-h-[50px] md:min-h-[50px]
         
         /* Responsive text sizing */
         text-sm md:text-base lg:text-lg
