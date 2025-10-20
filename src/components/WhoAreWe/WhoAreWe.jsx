@@ -18,12 +18,6 @@ const WhoAreWe = () => {
           Dedicated to creating positive change in communities through
           education, healthcare, and sustainable development initiatives.
         </p>
-        <p className="text-gray-600 text-sm md:text-base mb-8">
-          We are a team of passionate developers and designers dedicated to
-          creating innovative solutions for our clients. Our mission is to
-          empower communities through technology and sustainable programs,
-          delivering impactful results.
-        </p>
 
         {/* Call to Action */}
         <button className="px-8 py-4 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 shadow-lg transition transform hover:scale-105">
