@@ -1,3 +1,4 @@
+import ButtonToUp from "@/components/ButtonTopUp/ButtonToUp";
 import Footer from "@/components/Footer/Footer";
 import NavBar from "@/components/navber/Navber";
 import React from "react";
@@ -8,6 +9,7 @@ const Homelayout = ({ children }) => {
       <NavBar />
       <main className="flex-grow">{children}</main>
       <Footer />
+      <ButtonToUp></ButtonToUp>
     </div>
   );
 };

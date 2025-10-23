@@ -31,33 +31,33 @@ export const navItems = [
     icon: Target,
     items: [
       {
-        href: "/education",
+        href: "/focusarea/education",
         icon: GraduationCap,
         label: "Education",
        
       },
       {
-        href: "/health",
+        href: "/focusarea/health",
         icon: Heart,
         label: "Health",
       },
       {
-        href: "/environment",
+        href: "/focusarea/environment",
         icon: Sprout,
         label: "Environment",
       },
       {
-        href: "/culture",
+        href: "/focusarea/culture",
         icon: Palette,
         label: "Culture",
       },
       {
-        href: "/relife",
+        href: "/focusarea/relife",
         icon: Users,
         label: "Re-Life",
       },
       {
-        href: "/self-employment",
+        href: "/focusarea/self-employment",
         icon: Briefcase,
         label: "Self-Employment",
       },
