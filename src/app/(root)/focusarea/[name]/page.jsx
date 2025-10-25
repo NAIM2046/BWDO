@@ -85,7 +85,7 @@ const FocusArea = async ({ params }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-green-600 to-emerald-800 text-white">
+      <section className="relative bg-gradient-to-r from-green-400 to-emerald-200 text-white">
         <div className="container mx-auto px-4 py-16 lg:py-24 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Content */}

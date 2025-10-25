@@ -1,11 +1,9 @@
-import React from "react";
-
-const aboutpage = () => {
+// app/vissionmission/page.jsx
+export default function VissionMission() {
   return (
-    <div>
-      <h1>about page </h1>
-    </div>
+    <main>
+      <h1>Vision & Mission</h1>
+      <p>এটি ভিশন ও মিশন পেজ।</p>
+    </main>
   );
-};
-
-export default aboutpage;
+}

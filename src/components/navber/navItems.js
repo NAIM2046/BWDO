@@ -114,7 +114,7 @@ export const navItems = [
         label: "Vision, Mission, Values" 
       },
       { 
-        href: "/team", 
+        href: "/ourteam", 
         icon: Users, 
         label: "Our Team" 
       },
@@ -124,7 +124,7 @@ export const navItems = [
         label: "Partners" 
       },
       { 
-        href: "/contact", 
+        href: "/contact-us", 
         icon: Phone, 
         label: "Contact Us" 
       },
