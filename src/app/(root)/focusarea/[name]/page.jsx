@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
 
-const EnvironmentFocus = () => {
+const FocusArea = async ({ params }) => {
+  const { name } = await params;
   const focusData = {
-    title: "Environmental Conservation",
+    title: ` ${name} Conservation`,
     description:
       "Healthy living in Bangladesh is not facilitated by the environmental conditions. Human health, ecosystems, and economic growth in Bangladesh are being threatened by severe air, water, and noise pollution.",
 
@@ -90,11 +91,8 @@ const EnvironmentFocus = () => {
             {/* Content */}
             <div className="space-y-6">
               <div>
-                <span className="inline-block px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-semibold mb-4">
-                  Focus Area
-                </span>
                 <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
-                  Environmental Conservation
+                  {name} Conservation
                 </h1>
               </div>
 
@@ -286,9 +284,7 @@ const EnvironmentFocus = () => {
               <button className="px-8 py-4 bg-white text-green-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg hover:shadow-xl">
                 Volunteer for Cleanup
               </button>
-              <button className="px-8 py-4 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-all duration-300">
-                Support Our Mission
-              </button>
+
               <button className="px-8 py-4 bg-emerald-800 text-white rounded-lg font-semibold hover:bg-emerald-900 transition-colors duration-300">
                 Join Awareness Program
               </button>
@@ -300,4 +296,4 @@ const EnvironmentFocus = () => {
   );
 };
 
-export default EnvironmentFocus;
+export default FocusArea;
