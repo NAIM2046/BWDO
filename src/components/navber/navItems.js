@@ -69,13 +69,13 @@ export const navItems = [
     icon: FolderOpen,
     items: [
       {
-        href: "/current-project",
+        href: "/projects/current",
         icon: Calendar,
         label: "Current-Project",
         badge: "New",
       },
       {
-        href: "/completed-project",
+        href: "/projects/completed",
         icon: CheckCircle,
         label: "Completed-Project",
       },
