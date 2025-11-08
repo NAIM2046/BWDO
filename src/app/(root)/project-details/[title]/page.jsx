@@ -1,8 +1,7 @@
 "use client";
-import Image from "next/image";
-import { Calendar, Folder, Clock, Play } from "lucide-react";
-import { use } from "react";
 
+import React, { useState } from 'react';
+import { Calendar, Award, PlayCircle, X, ChevronLeft, Share2, Heart } from 'lucide-react';
 
 const projectData = {
   title: "Quality Education for Rural Children",
@@ -37,10 +36,11 @@ const projectData = {
   ],
 };
 
-export default function ProjectDetailsPage({ params }) {
+export default function ProjectDetailPage() {
+  const [showVideo, setShowVideo] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [liked, setLiked] = useState(false);
 
-    const { title } = use(params);
-    console.log("Project Title from URL:", title);
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -49,162 +49,143 @@ export default function ProjectDetailsPage({ params }) {
     });
   };
 
-  const getStatusColor = (status) => {
-    switch (status.toLowerCase()) {
-      case 'ongoing': return 'bg-green-100 text-green-800 border-green-200';
-      case 'completed': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'upcoming': return 'bg-orange-100 text-orange-800 border-orange-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: projectData.title,
+        text: projectData.content[1]?.text || '',
+        url: window.location.href,
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 mb-6 border border-gray-100">
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-            <div className="flex-1">
-              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
-                {projectData.title}
-              </h1>
-              
-              <div className="flex flex-wrap items-center gap-4 mb-4">
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Folder className="w-4 h-4" />
-                  <span className="font-medium">{projectData.category}</span>
-                </div>
-                
-                <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(projectData.status)}`}>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+      {/* Navigation Bar */}
+     
+
+      {/* Hero Section - Responsive Heights */}
+      <div className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] overflow-hidden">
+        <img 
+          src={projectData.coverImage} 
+          alt={projectData.title}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 lg:p-8">
+          <div className="max-w-6xl mx-auto">
+            <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 bg-green-500 text-white text-xs sm:text-sm font-semibold rounded-full mb-2 sm:mb-4">
+              {projectData.category}
+            </span>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-4 leading-tight">
+              {projectData.title}
+            </h1>
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-4 text-white/90 text-sm sm:text-base">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                <span className="line-clamp-1">{formatDate(projectData.startDate)} - {formatDate(projectData.endDate)}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Award className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-blue-500 rounded-full text-xs sm:text-sm font-medium">
                   {projectData.status}
                 </span>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  <span>Started: {formatDate(projectData.startDate)}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  <span>Ends: {formatDate(projectData.endDate)}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Cover Image */}
-        <div className="relative w-full h-80 lg:h-96 rounded-2xl overflow-hidden shadow-lg mb-8">
-          <Image
-            src={projectData.coverImage}
-            alt={projectData.title}
-            fill
-            className="object-cover"
-            priority
-            sizes="(max-width: 768px) 100vw, 50vw" 
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-        </div>
-
-        {/* Content Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Project Content */}
-            <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
-              <div className="space-y-6">
-                {projectData.content.map((item, idx) => {
-                  if (item.type === "Heading")
-                    return (
-                      <h2 key={idx} className="text-2xl font-semibold text-gray-900 pt-4 first:pt-0 border-t first:border-t-0 border-gray-100 first:border-none">
-                        {item.text}
-                      </h2>
-                    );
-                  if (item.type === "Paragraph")
-                    return (
-                      <p key={idx} className="text-gray-700 leading-relaxed text-lg">
-                        {item.text}
-                      </p>
-                    );
-                  return null;
-                })}
-              </div>
-            </div>
-
-            {/* Video Section */}
-            <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-3 h-6 bg-blue-600 rounded-full"></div>
-                <h3 className="text-xl font-semibold text-gray-900">Project Video</h3>
-              </div>
-              
-              <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-gray-900">
-                <iframe
-                  src={`https://www.youtube.com/embed/${projectData.videoId}`}
-                  title="Project Video"
-                  className="w-full h-full"
-                  allowFullScreen
-                />
-                <div className="absolute inset-0 pointer-events-none border-2 border-white/10 rounded-xl"></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Gallery */}
-            <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-3 h-6 bg-green-600 rounded-full"></div>
-                <h3 className="text-xl font-semibold text-gray-900">Gallery</h3>
-              </div>
-              
-              <div className="grid grid-cols-1 gap-4">
-                {projectData.galleryImages.map((img, i) => (
-                  <div 
-                    key={i} 
-                    className="relative w-full h-48 rounded-xl overflow-hidden group cursor-pointer"
-                  >
-                    <Image 
-                      src={img} 
-                      alt={`Gallery image ${i + 1}`} 
-                      fill 
-                      className="object-cover transition-transform duration-300 group-hover:scale-105" 
-                      sizes="(max-width: 768px) 100vw, 50vw" 
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Project Info Card */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl shadow-sm p-6 border border-blue-200">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Facts</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-blue-200">
-                  <span className="text-gray-600">Category</span>
-                  <span className="font-medium text-gray-900">{projectData.category}</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-blue-200">
-                  <span className="text-gray-600">Status</span>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(projectData.status)}`}>
-                    {projectData.status}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-gray-600">Duration</span>
-                  <span className="font-medium text-gray-900 text-right">
-                    {formatDate(projectData.startDate)}<br/>
-                    to {formatDate(projectData.endDate)}
-                  </span>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+        <div className="space-y-6 sm:space-y-8">
+            {/* Content Section */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8">
+              {projectData.content.map((item, index) => {
+                if (item.type === "Heading") {
+                  return (
+                    <h2 key={index} className="text-xl sm:text-2xl font-bold text-gray-800 mt-4 sm:mt-6 mb-3 sm:mb-4 first:mt-0">
+                      {item.text}
+                    </h2>
+                  );
+                } else if (item.type === "Paragraph") {
+                  return (
+                    <p key={index} className="text-sm sm:text-base text-gray-600 leading-relaxed mb-4 sm:mb-6">
+                      {item.text}
+                    </p>
+                  );
+                }
+                return null;
+              })}
+            </div>
+
+            {/* Video Section */}
+            {projectData.videoId && (
+              <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">Project Video</h2>
+                 <div className="relative h-48 sm:h-64 md:h-80 lg:h-96">
+                    <iframe
+                      className="w-full h-full rounded-lg sm:rounded-xl"
+                      src={`https://www.youtube.com/embed/${projectData.videoId}`}
+                      title="Project video"
+                      allow="accelerometer;  clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+              </div>
+            )}
+
+            {/* Gallery Section */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Project Gallery</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                {projectData.galleryImages.map((image, index) => (
+                  <div 
+                    key={index}
+                    className="relative h-40 sm:h-48 md:h-56 rounded-lg sm:rounded-xl overflow-hidden cursor-pointer group"
+                    onClick={() => setSelectedImage(image)}
+                  >
+                    <img 
+                      src={image} 
+                      alt={`Gallery ${index + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm font-medium">
+                        View Full Size
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+        </div>
+      </div>
+
+
+      {/* Image Modal - Full Screen */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button 
+            className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10 p-2 hover:bg-white/10 rounded-full"
+            onClick={() => setSelectedImage(null)}
+          >
+            <X className="w-6 h-6 sm:w-8 sm:h-8" />
+          </button>
+          <img 
+            src={selectedImage} 
+            alt="Gallery preview"
+            className="max-w-full max-h-full object-contain rounded-lg"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 }

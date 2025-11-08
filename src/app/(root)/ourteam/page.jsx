@@ -1,97 +1,49 @@
-import React from "react";
+"use client";
 
-const teamMembers = [
-  {
-    name: "Md. Naim",
-    role: "Founder & CEO",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    bio: "Leading with vision and passion for community development.",
-    social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "#"
-    }
-  },
-  {
-    name: "Fatima Rahman",
-    role: "Project Coordinator",
-    image: "https://randomuser.me/api/portraits/women/45.jpg",
-    bio: "Ensuring projects run smoothly and effectively.",
-    social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "#"
-    }
-  },
-  {
-    name: "Arif Hossain",
-    role: "Finance Officer",
-    image: "https://randomuser.me/api/portraits/men/55.jpg",
-    bio: "Managing resources for maximum community impact.",
-    social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "#"
-    }
-  },
-  {
-    name: "Sara Akter",
-    role: "Volunteer Manager",
-    image: "https://randomuser.me/api/portraits/women/50.jpg",
-    bio: "Connecting passionate volunteers with meaningful opportunities.",
-    social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "#"
-    }
-  },
-  {
-    name: "Rahim Khan",
-    role: "Community Outreach",
-    image: "https://randomuser.me/api/portraits/men/65.jpg",
-    bio: "Building bridges between communities and our organization.",
-    social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "#"
-    }
-  },
-  {
-    name: "Ayesha Begum",
-    role: "Education Director",
-    image: "https://randomuser.me/api/portraits/women/32.jpg",
-    bio: "Developing educational programs for underprivileged children.",
-    social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "#"
-    }
-  },
-  {
-    name: "Kamal Hossain",
-    role: "Health Coordinator",
-    image: "https://randomuser.me/api/portraits/men/75.jpg",
-    bio: "Overseeing health initiatives and medical camps.",
-    social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "#"
-    }
-  },
-  {
-    name: "Nusrat Jahan",
-    role: "Communications Manager",
-    image: "https://randomuser.me/api/portraits/women/65.jpg",
-    bio: "Sharing our stories and impact with the world.",
-    social: {
-      linkedin: "#",
-      twitter: "#",
-      email: "#"
-    }
-  }
-];
+import useAxiosPublic from "@/hook/useAxiosPublic";
+import React, { useEffect, useState } from "react";
+
+ 
 
 const OurTeamPage = () => {
+   const [teamMembers , setTeamMembers] = useState([]);
+   const axiosPublic = useAxiosPublic() ;
+   const [loading , setLoading] = useState ( true ) ;
+   const [error , setError] = useState ( null ) ;
+   const fetchTeamMembers = async () => {
+
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await axiosPublic.get("/api/team");
+      setTeamMembers(res.data.team);
+    } catch (error) {
+      console.error("Error fetching team members:", error);
+      setError("Failed to load team members");
+    } finally {
+      setLoading(false);
+    }
+   };
+
+   useEffect(() => {
+    fetchTeamMembers() ;
+   } , [] ) ;
+
+   if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
+      </div>
+    );
+  } 
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-red-500 text-lg">{error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 text-gray-800">
       {/* 🌟 Hero Cover Section */}
@@ -171,9 +123,9 @@ const OurTeamPage = () => {
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                       </svg>
                     </a>
-                    <a href={member.social.twitter} className="text-gray-400 hover:text-blue-400 transition-colors">
+                  <a href={member.social.facebook} className="text-gray-400 hover:text-blue-600 transition-colors">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                       </svg>
                     </a>
                     <a href={`mailto:${member.social.email}`} className="text-gray-400 hover:text-red-500 transition-colors">

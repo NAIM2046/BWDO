@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React from "react";
 
 const WhoAreWe = () => {
@@ -20,9 +21,9 @@ const WhoAreWe = () => {
         </p>
 
         {/* Call to Action */}
-        <button className="px-8 py-4 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 shadow-lg transition transform hover:scale-105">
+        <Link href="/about" className="px-8 py-4 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 shadow-lg transition transform hover:scale-105">
           Learn More
-        </button>
+        </Link>
       </div>
     </section>
   );

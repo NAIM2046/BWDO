@@ -1,48 +1,44 @@
 "use client";
 
+
+import useAxiosPublic from "@/hook/useAxiosPublic";
 import React, { useState, useEffect } from "react";
 
 const Slider = () => {
+  const axiosPublic = useAxiosPublic();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [slides, setSlides] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const slides = [
-    {
-      id: 1,
-      title: "Innovative Solutions",
-      description:
-        "Transforming ideas into powerful digital experiences that drive your business forward",
-      image: "/image/silder/bwdo.jpg",
-    },
-    {
-      id: 2,
-      title: "Premium Quality",
-      description:
-        "Delivering excellence and unmatched quality in every project we undertake",
-      image: "/image/silder/slider2.jpg",
-    },
-    {
-      id: 3,
-      title: "Global Reach",
-      description:
-        "Connecting businesses worldwide with cutting-edge technology and innovation",
-      image: "/image/silder/slider3.jpg",
-    },
-    {
-      id: 4,
-      title: "Future Ready",
-      description:
-        "Preparing your business for tomorrow with today's best technology solutions",
-      image:
-        "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80",
-    },
-  ];
+  const fetchSlides = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await axiosPublic.get("/api/slide");
+      setSlides(res.data.slides);
+    } catch (error) {
+      console.error("Error fetching slides:", error);
+      setError("Failed to load slides");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSlides();
+  }, []);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    if (slides.length > 0) {
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    if (slides.length > 0) {
+      setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    }
   };
 
   const goToSlide = (index) => {
@@ -51,11 +47,56 @@ const Slider = () => {
 
   // Auto slide every 9 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 9000);
-    return () => clearInterval(interval);
-  }, [currentSlide]);
+    if (slides.length > 0) {
+      const interval = setInterval(() => {
+        nextSlide();
+      }, 9000);
+      return () => clearInterval(interval);
+    }
+  }, [currentSlide, slides.length]);
+
+  // Loading State
+  if (loading) {
+    return (
+      <div className="relative w-full h-[400px] sm:h-[400px] md:h-[400px] lg:h-[500px] xl:h-[600px] bg-gray-200 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 text-lg">Loading slides...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error State
+  if (error) {
+    return (
+      <div className="relative w-full h-[400px] sm:h-[400px] md:h-[400px] lg:h-[500px] xl:h-[600px] bg-red-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 text-4xl mb-4">⚠️</div>
+          <p className="text-red-600 text-lg mb-4">{error}</p>
+          <button
+            onClick={fetchSlides}
+            className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Empty State
+  if (slides.length === 0) {
+    return (
+      <div className="relative w-full h-[400px] sm:h-[400px] md:h-[400px] lg:h-[500px] xl:h-[600px] bg-gradient-to-r from-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">📷</div>
+          <h3 className="text-2xl font-bold text-gray-700 mb-2">No Slides Available</h3>
+          <p className="text-gray-600 mb-4">Add some slides to get started</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full h-[400px] sm:h-[400px] md:h-[400px] lg:h-[500px] xl:h-[600px] overflow-hidden bg-black">
@@ -63,7 +104,7 @@ const Slider = () => {
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
           <div
-            key={slide.id}
+            key={slide._id}
             className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out ${
               index === currentSlide
                 ? "opacity-100 scale-100"
@@ -87,6 +128,11 @@ const Slider = () => {
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight font-poppins">
                   {slide.title}
                 </h1>
+                {slide.subtitle && (
+                  <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-3 sm:mb-4 text-blue-200 font-medium">
+                    {slide.subtitle}
+                  </p>
+                )}
                 <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-6 sm:mb-8 leading-relaxed text-gray-100 font-light max-w-3xl mx-auto">
                   {slide.description}
                 </p>
@@ -153,9 +199,14 @@ const Slider = () => {
         ))}
       </div>
 
+      {/* Slide Counter */}
+      <div className="absolute top-4 right-4 bg-black/40 text-white px-3 py-1 rounded-full text-sm backdrop-blur-sm z-10 border border-white/20">
+        {currentSlide + 1} / {slides.length}
+      </div>
+
       {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/40 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/10 pointer-events-none" />
     </div>
   );
 };
