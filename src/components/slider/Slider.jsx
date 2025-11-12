@@ -1,33 +1,17 @@
 "use client";
 
 
-import useAxiosPublic from "@/hook/useAxiosPublic";
+
 import React, { useState, useEffect } from "react";
 
-const Slider = () => {
-  const axiosPublic = useAxiosPublic();
+const Slider = ({ slides }) => {
+
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [slides, setSlides] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  const fetchSlides = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const res = await axiosPublic.get("/api/slide");
-      setSlides(res.data.slides);
-    } catch (error) {
-      console.error("Error fetching slides:", error);
-      setError("Failed to load slides");
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  useEffect(() => {
-    fetchSlides();
-  }, []);
+
+
+
 
   const nextSlide = () => {
     if (slides.length > 0) {
@@ -55,35 +39,8 @@ const Slider = () => {
     }
   }, [currentSlide, slides.length]);
 
-  // Loading State
-  if (loading) {
-    return (
-      <div className="relative w-full h-[400px] sm:h-[400px] md:h-[400px] lg:h-[500px] xl:h-[600px] bg-gray-200 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Loading slides...</p>
-        </div>
-      </div>
-    );
-  }
 
-  // Error State
-  if (error) {
-    return (
-      <div className="relative w-full h-[400px] sm:h-[400px] md:h-[400px] lg:h-[500px] xl:h-[600px] bg-red-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-red-500 text-4xl mb-4">⚠️</div>
-          <p className="text-red-600 text-lg mb-4">{error}</p>
-          <button
-            onClick={fetchSlides}
-            className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
+
 
   // Empty State
   if (slides.length === 0) {
@@ -105,11 +62,10 @@ const Slider = () => {
         {slides.map((slide, index) => (
           <div
             key={slide._id}
-            className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out ${
-              index === currentSlide
-                ? "opacity-100 scale-100"
-                : "opacity-0 scale-105"
-            }`}
+            className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out ${index === currentSlide
+              ? "opacity-100 scale-100"
+              : "opacity-0 scale-105"
+              }`}
             style={{
               backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url(${slide.image})`,
               backgroundSize: "cover",
@@ -118,11 +74,10 @@ const Slider = () => {
             }}
           >
             <div
-              className={`flex items-center justify-center h-full transition-all duration-1000 delay-200 ${
-                index === currentSlide
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
+              className={`flex items-center justify-center h-full transition-all duration-1000 delay-200 ${index === currentSlide
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+                }`}
             >
               <div className="text-center text-white px-4 sm:px-6 max-w-2xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight font-poppins">
@@ -189,11 +144,10 @@ const Slider = () => {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide
-                ? "bg-white scale-125 shadow-lg"
-                : "bg-white/50 hover:bg-white/70"
-            }`}
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentSlide
+              ? "bg-white scale-125 shadow-lg"
+              : "bg-white/50 hover:bg-white/70"
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

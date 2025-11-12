@@ -16,8 +16,13 @@ import {
   Eye,
   Handshake,
   Phone,
-  HeartHandshake
+  HeartHandshake,
+  Activity,
+
+
 } from "lucide-react";
+import { MdOutlineSportsEsports } from "react-icons/md";
+
 
 export const navItems = [
   {
@@ -31,35 +36,40 @@ export const navItems = [
     icon: Target,
     items: [
       {
-        href: "/focusarea/education",
+        href: "/focusarea/education/3",
         icon: GraduationCap,
         label: "Education",
-       
+
       },
       {
-        href: "/focusarea/health",
+        href: "/focusarea/health/5",
         icon: Heart,
         label: "Health",
       },
       {
-        href: "/focusarea/environment",
+        href: "/focusarea/environment/1",
         icon: Sprout,
         label: "Environment",
       },
       {
-        href: "/focusarea/culture",
+        href: "/focusarea/culture/4",
         icon: Palette,
         label: "Culture",
       },
       {
-        href: "/focusarea/relife",
+        href: "/focusarea/relife/7",
         icon: Users,
         label: "Re-Life",
       },
       {
-        href: "/focusarea/self-employment",
+        href: "/focusarea/self-employment/2",
         icon: Briefcase,
         label: "Self-Employment",
+      },
+      {
+        href: "/focusarea/sport/2",
+        icon: MdOutlineSportsEsports,
+        label: "Sport",
       },
     ],
   },
@@ -86,20 +96,20 @@ export const navItems = [
     label: "Updates",
     icon: Megaphone,
     items: [
-      { 
-        href: "/news", 
-        icon: Megaphone, 
-        label: "News" 
+      {
+        href: "/news",
+        icon: Megaphone,
+        label: "News"
       },
-      { 
-        href: "/blog", 
-        icon: FileText, 
-        label: "Blog" 
+      {
+        href: "/blog",
+        icon: FileText,
+        label: "Blog"
       },
-      { 
-        href: "/gallery", 
-        icon: Image, 
-        label: "Photo Gallery" 
+      {
+        href: "/gallery",
+        icon: Image,
+        label: "Photo Gallery"
       },
     ],
   },
@@ -108,30 +118,30 @@ export const navItems = [
     label: "About Us",
     icon: Users,
     items: [
-      { 
-        href: "/vission-mission", 
-        icon: Eye, 
-        label: "Vision, Mission, Values" 
+      {
+        href: "/vision-mission",
+        icon: Eye,
+        label: "Vision, Mission, Values"
       },
-      { 
-        href: "/ourteam", 
-        icon: Users, 
-        label: "Our Team" 
+      {
+        href: "/ourteam",
+        icon: Users,
+        label: "Our Team"
       },
-      { 
-        href: "/partners", 
-        icon: Handshake, 
-        label: "Partners" 
+      {
+        href: "/partners",
+        icon: Handshake,
+        label: "Partners"
       },
-      { 
-        href: "/contact-us", 
-        icon: Phone, 
-        label: "Contact Us" 
+      {
+        href: "/contact-us",
+        icon: Phone,
+        label: "Contact Us"
       },
-      { 
-        href: "/volunteer", 
-        icon: HeartHandshake, 
-        label: "Become A Volunteer" 
+      {
+        href: "/volunteer",
+        icon: HeartHandshake,
+        label: "Become A Volunteer"
       },
     ],
   },

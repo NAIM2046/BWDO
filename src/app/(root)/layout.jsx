@@ -5,7 +5,7 @@ import React from "react";
 
 const Homelayout = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col mx-auto max-w-[1400px]">
       <NavBar />
       <main className="flex-grow">{children}</main>
       <Footer />
