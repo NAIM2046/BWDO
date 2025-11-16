@@ -1,49 +1,17 @@
-"use client";
+import getAllTeam from "@/utils/getAllTeam";
 
-import useAxiosPublic from "@/hook/useAxiosPublic";
-import React, { useEffect, useState } from "react";
+
+
+
 
  
 
-const OurTeamPage = () => {
-   const [teamMembers , setTeamMembers] = useState([]);
-   const axiosPublic = useAxiosPublic() ;
-   const [loading , setLoading] = useState ( true ) ;
-   const [error , setError] = useState ( null ) ;
-   const fetchTeamMembers = async () => {
+const OurTeamPage = async () => {
+  const teamMembers = await getAllTeam();
+  console.log(teamMembers)
 
-    try {
-      setLoading(true);
-      setError(null);
-      const res = await axiosPublic.get("/api/team");
-      setTeamMembers(res.data.team);
-    } catch (error) {
-      console.error("Error fetching team members:", error);
-      setError("Failed to load team members");
-    } finally {
-      setLoading(false);
-    }
-   };
 
-   useEffect(() => {
-    fetchTeamMembers() ;
-   } , [] ) ;
-
-   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
-      </div>
-    );
-  } 
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-red-500 text-lg">{error}</p>
-      </div>
-    );
-  }
-
+   
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 text-gray-800">
       {/* 🌟 Hero Cover Section */}
@@ -91,7 +59,7 @@ const OurTeamPage = () => {
           </div>
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {teamMembers.map((member, index) => (
+            {teamMembers?.map((member, index) => (
               <div
                 key={index}
                 className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group border border-gray-100 overflow-hidden"

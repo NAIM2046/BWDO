@@ -27,7 +27,7 @@ const ProjectManagePage = () => {
     const [formData, setFormData] = useState({
         title: '',
         category: '',
-        status: 'Planning',
+        status: 'current',
         startDate: '',
         endDate: '',
         coverImage: '',
@@ -38,7 +38,7 @@ const ProjectManagePage = () => {
     });
 
     const categories = ['Education', 'Healthcare', 'Environment', 'Community', 'Technology', 'Infrastructure'];
-    const statuses = ['Planning', 'Ongoing', 'Completed', 'On Hold'];
+    const statuses =[ 'current', 'completed'];
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -134,7 +134,7 @@ const ProjectManagePage = () => {
         setFormData({
             title: '',
             category: '',
-            status: 'Planning',
+            status: 'current',
             startDate: '',
             endDate: '',
             coverImage: '',
@@ -217,7 +217,7 @@ const ProjectManagePage = () => {
                             <div>
                                 <p className="text-gray-500 text-sm">Ongoing</p>
                                 <p className="text-3xl font-bold text-blue-600 mt-1">
-                                    {projects.filter(p => p.status === 'Ongoing').length}
+                                    {projects.filter(p => p.status === 'current').length}
                                 </p>
                             </div>
                             <div className="p-3 bg-blue-100 rounded-lg">
@@ -230,7 +230,7 @@ const ProjectManagePage = () => {
                             <div>
                                 <p className="text-gray-500 text-sm">Completed</p>
                                 <p className="text-3xl font-bold text-green-600 mt-1">
-                                    {projects.filter(p => p.status === 'Completed').length}
+                                    {projects.filter(p => p.status === 'completed').length}
                                 </p>
                             </div>
                             <div className="p-3 bg-green-100 rounded-lg">

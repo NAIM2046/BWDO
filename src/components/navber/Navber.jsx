@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Menu, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "/public/FB_IMG_1760359831083.jpg";
+import logo from "/public/FB_IMG_1760359831083-removebg-preview.png";
 import { navItems } from "./navItems";
 import MobileMenu from "./MobileMenu";
 import DonateButton from "../ui/DonateButton";

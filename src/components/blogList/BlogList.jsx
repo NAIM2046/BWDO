@@ -58,6 +58,8 @@ export default function BlogList({ setFormData, setEditingId }) {
             tags: blog.tags || [],
             gallery: blog.gallery || [],
             content: blog.content || [],
+            videoUrl: blog.videoUrl || "",
+            shortDescription: blog.shortDescription || ''
         });
     };
 

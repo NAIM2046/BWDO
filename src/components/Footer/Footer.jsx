@@ -2,13 +2,14 @@ import React from "react";
 import Link from "next/link";
 import {
   FaFacebookF,
-  FaTwitter,
+ 
   FaInstagram,
   FaLinkedinIn,
   FaMapMarkerAlt,
   FaPhone,
   FaEnvelope,
   FaHeart,
+  FaYoutube,
 } from "react-icons/fa";
 import Logo from "./Logo";
 
@@ -51,14 +52,14 @@ const Footer = () => {
                 <span className="sr-only">Facebook</span>
               </a>
               <a
-                href="#"
-                className="bg-gray-800 hover:bg-blue-400 text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 transform hover:scale-110"
+                href="https://youtube.com/@officialbrotherhood16?si=xAnWGWKwH94_juve"
+                className="bg-gray-800 hover:bg-red-400 text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 transform hover:scale-110"
               >
-                <FaTwitter className="w-4 h-4" />
-                <span className="sr-only">Twitter</span>
+                <FaYoutube className="w-4 h-4" />
+                <span className="sr-only">Youtube</span>
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/brotherhood_d.o_?igsh=ZThjaWM4cnFocnV6"
                 className="bg-gray-800 hover:bg-pink-600 text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 transform hover:scale-110"
               >
                 <FaInstagram className="w-4 h-4" />
@@ -82,7 +83,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="/about"
+                  href="/vision-mission"
                   className="text-gray-300 hover:text-white transition-colors duration-300 hover:underline"
                 >
                   About Us
@@ -90,7 +91,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/projects"
+                  href="/projects/completed"
                   className="text-gray-300 hover:text-white transition-colors duration-300 hover:underline"
                 >
                   Our Projects
@@ -131,7 +132,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="/education"
+                  href={`/focusarea/education/${3}`}
                   className="text-gray-300 hover:text-white transition-colors duration-300 hover:underline"
                 >
                   Education
@@ -139,7 +140,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/healthcare"
+                  href={`/focusarea/health/${5}`}
                   className="text-gray-300 hover:text-white transition-colors duration-300 hover:underline"
                 >
                   Healthcare
@@ -147,7 +148,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/environment"
+                  href={`/focusarea/environment/${1}`}
                   className="text-gray-300 hover:text-white transition-colors duration-300 hover:underline"
                 >
                   Environment
@@ -155,15 +156,15 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/women-empowerment"
+                  href={`/focusarea/sport/${2}`}
                   className="text-gray-300 hover:text-white transition-colors duration-300 hover:underline"
                 >
-                  Women Empowerment
+                 Sport
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/disaster-relief"
+                  href={`/focusarea/relife/${7}`}
                   className="text-gray-300 hover:text-white transition-colors duration-300 hover:underline"
                 >
                   Disaster Relief
@@ -222,6 +223,10 @@ const Footer = () => {
               &copy; {new Date().getFullYear()} Brotherhood Welfare and
               Development Organization. All rights reserved.
             </div>
+             <div className="text-gray-400 flex gap-2 items-center text-xs md:text-sm">
+                
+                <span> Devlopment by</span> <Link className="hover:text-green-400" href={'https://www.nexovatelabs.com/'}> <u>NexoVateLabs</u></Link>
+              </div>
             <div className="flex flex-wrap justify-center space-x-4 md:space-x-6 text-sm">
               <Link
                 href="/privacy"
@@ -241,10 +246,7 @@ const Footer = () => {
               >
                 Disclaimer
               </Link>
-              <div className="text-green-500 flex items-center text-xs md:text-sm">
-                <FaHeart className="h-3 w-3 mr-1" />
-                Registered Non-Profit Charity
-              </div>
+             
             </div>
           </div>
         </div>

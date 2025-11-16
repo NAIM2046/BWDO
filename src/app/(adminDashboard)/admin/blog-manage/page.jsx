@@ -32,6 +32,7 @@ const BlogManagePage = () => {
     readTime: "",
     tags: [],
     category: "",
+    shortDescription : "",
     content: [],
     gallery: [],
     videoUrl: ""
@@ -125,7 +126,7 @@ const BlogManagePage = () => {
   // ✅ Validate file type
   const isValidImageFile = (file) => {
     const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 10 * 1024 * 1024; // 5MB
 
     if (!validTypes.includes(file.type)) {
       showMessage("Please select a valid image file (JPEG, PNG, WebP, or GIF)", "error");
@@ -308,7 +309,8 @@ const BlogManagePage = () => {
       category: "",
       content: [],
       gallery: [],
-      videoUrl: ""
+      videoUrl: "",
+      shortDescription: ""
     });
     setEditingId(null);
     setTagInput("");
@@ -522,11 +524,11 @@ const BlogManagePage = () => {
                 <div>
                   <label className="block text-gray-700 font-medium mb-2">Video URL (Optional)</label>
                   <input
-                    type="url"
+                    type="text"
                     name="videoUrl"
                     value={formData.videoUrl}
                     onChange={handleChange}
-                    placeholder="https://youtube.com/embed/..."
+                    placeholder="v-khsdofiwjeoifj"
                     className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                     aria-label="Video URL"
                   />
@@ -652,6 +654,23 @@ const BlogManagePage = () => {
                   )}
                 </div>
               </div>
+
+              <div className="mb-4">
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Short Description
+                      </label>
+
+                      <textarea
+                        name="shortDescription"
+                        value={formData.shortDescription}
+                        onChange={handleChange}
+                        placeholder="e.g., Blog short description (around 100 words)..."
+                        rows={4}
+                        className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
+                        aria-label="Short description"
+                      />
+                    </div>
+
 
               {/* Content Blocks */}
               <div className="border-t pt-6">

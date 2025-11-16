@@ -4,11 +4,14 @@ import React, { useState } from "react";
 
 const VolunteerPage = () => {
   const [formData, setFormData] = useState({
+    region: "Volunteer",
     name: "",
     email: "",
-    interest: "",
+    subject: "",
     message: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -17,16 +20,80 @@ const VolunteerPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    alert("Thank you for your interest in volunteering! We'll contact you soon.");
-    setFormData({ name: "", email: "", interest: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setSuccess(true);
+        setFormData({
+          region: "Volunteer",
+          name: "",
+          email: "",
+          subject: "",
+          message: ""
+        });
+        
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          setSuccess(false);
+        }, 5000);
+      } else {
+        alert("There was an error submitting your application. Please try again.");
+      }
+    } catch (error) {
+      alert("There was an error submitting your application. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const closeSuccessMessage = () => {
+    setSuccess(false);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800">
+      {/* Success Message */}
+      {success && (
+        <div className="fixed top-4 right-4 left-4 sm:left-auto sm:max-w-md mx-auto z-50 bg-green-50 border border-green-200 rounded-xl shadow-lg p-4 animate-fade-in">
+          <div className="flex items-start">
+            <div className="flex-shrink-0">
+              <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+            <div className="ml-3 flex-1">
+              <p className="text-sm font-medium text-green-800">
+                Application submitted successfully!
+              </p>
+              <p className="mt-1 text-sm text-green-600">
+                Thank you for your interest in volunteering! We'll contact you within 24 hours.
+              </p>
+            </div>
+            <button
+              onClick={closeSuccessMessage}
+              className="ml-4 flex-shrink-0 text-green-400 hover:text-green-600 transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* 🌟 Enhanced Hero Section */}
       <section
         className="relative h-[70vh] flex items-center justify-center text-center bg-cover bg-fixed bg-center overflow-hidden"
@@ -122,95 +189,6 @@ const VolunteerPage = () => {
         </div>
       </section>
 
-      {/* 🌍 Enhanced Opportunities Section */}
-      <section id="opportunities" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50 px-6 md:px-12 lg:px-24">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-blue-500 font-semibold text-lg mb-2 block">GET INVOLVED</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Volunteer <span className="text-blue-600">Opportunities</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Find the perfect role that matches your skills and interests
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Teaching & Mentorship",
-                desc: "Help students learn and grow by sharing your knowledge and experience.",
-                icon: "📚",
-                color: "from-purple-500 to-pink-500",
-                skills: ["Teaching", "Communication", "Patience"]
-              },
-              {
-                title: "Community Health",
-                desc: "Support local health drives, awareness programs and wellness initiatives.",
-                icon: "🏥",
-                color: "from-green-500 to-blue-500",
-                skills: ["Healthcare", "Organization", "Empathy"]
-              },
-              {
-                title: "Event Coordination",
-                desc: "Assist in organizing and managing community events and fundraisers.",
-                icon: "🎪",
-                color: "from-orange-500 to-red-500",
-                skills: ["Planning", "Teamwork", "Creativity"]
-              },
-              {
-                title: "Environmental Care",
-                desc: "Participate in cleanup drives and sustainability initiatives.",
-                icon: "🌱",
-                color: "from-emerald-500 to-teal-500",
-                skills: ["Environment", "Physical", "Teamwork"]
-              },
-              {
-                title: "Tech Support",
-                desc: "Help with website, social media, and digital literacy programs.",
-                icon: "💻",
-                color: "from-blue-500 to-indigo-500",
-                skills: ["Technology", "Teaching", "Problem-solving"]
-              },
-              {
-                title: "Elderly Care",
-                desc: "Provide companionship and support for senior community members.",
-                icon: "👵",
-                color: "from-pink-500 to-rose-500",
-                skills: ["Compassion", "Listening", "Patience"]
-              }
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group"
-              >
-                <div className={`h-2 bg-gradient-to-r ${item.color}`}></div>
-                <div className="p-6">
-                  <div className="text-3xl mb-4">{item.icon}</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">{item.desc}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {item.skills.map((skill, skillIndex) => (
-                      <span
-                        key={skillIndex}
-                        className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      
-
       {/* 📝 Enhanced Volunteer Form */}
       <section id="signup" className="py-20 px-6 md:px-12 lg:px-24 bg-gradient-to-br from-white to-gray-50">
         <div className="max-w-4xl mx-auto">
@@ -259,8 +237,8 @@ const VolunteerPage = () => {
                   <div>
                     <label className="block font-semibold text-gray-700 mb-2">Area of Interest *</label>
                     <select
-                      name="interest"
-                      value={formData.interest}
+                      name="subject"
+                      value={formData.subject}
                       onChange={handleChange}
                       className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       required
@@ -289,9 +267,17 @@ const VolunteerPage = () => {
 
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 disabled:from-green-300 disabled:to-blue-300 text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:transform-none shadow-lg hover:shadow-xl disabled:hover:shadow-lg"
                   >
-                    Join Our Volunteer Team
+                    {isSubmitting ? (
+                      <div className="flex items-center justify-center space-x-2">
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Submitting...</span>
+                      </div>
+                    ) : (
+                      "Join Our Volunteer Team"
+                    )}
                   </button>
                 </form>
               </div>
@@ -326,7 +312,15 @@ const VolunteerPage = () => {
         </div>
       </section>
 
-     
+      <style jsx>{`
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.3s ease-out;
+        }
+      `}</style>
     </div>
   );
 };

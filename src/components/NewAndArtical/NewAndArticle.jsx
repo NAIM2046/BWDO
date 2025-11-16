@@ -1,65 +1,10 @@
+import getAllblogInfo from "@/utils/getAllblogInfo";
+import Link from "next/link";
 import React from "react";
 
-const NewAndArticle = () => {
-  // Sample data with live demo images from Picsum
-  const articles = [
-    {
-      id: 1,
-      title: "The Future of Web Development in 2024",
-      excerpt:
-        "Exploring the latest trends and technologies shaping the future of web development with AI, Web3, and modern frameworks.",
-      image: "https://picsum.photos/800/600?random=1",
-      category: "Technology",
-      date: "March 15, 2024",
-      readTime: "5 min read",
-      author: {
-        name: "Sarah Johnson",
-        avatar: "https://i.pravatar.cc/150?img=1",
-      },
-    },
-    {
-      id: 2,
-      title: "Sustainable Design Practices for Modern Websites",
-      excerpt:
-        "How to create beautiful, functional websites while minimizing environmental impact and improving performance.",
-      image: "https://picsum.photos/800/600?random=2",
-      category: "Design",
-      date: "March 12, 2024",
-      readTime: "4 min read",
-      author: {
-        name: "Mike Chen",
-        avatar: "https://i.pravatar.cc/150?img=2",
-      },
-    },
-    {
-      id: 3,
-      title: "Mastering React Performance Optimization",
-      excerpt:
-        "Advanced techniques to improve your React application's performance and user experience with modern hooks.",
-      image: "https://picsum.photos/800/600?random=3",
-      category: "Development",
-      date: "March 10, 2024",
-      readTime: "7 min read",
-      author: {
-        name: "Emily Davis",
-        avatar: "https://i.pravatar.cc/150?img=3",
-      },
-    },
-    {
-      id: 4,
-      title: "The Rise of AI in Frontend Development",
-      excerpt:
-        "How artificial intelligence is transforming the way we build user interfaces and automate development workflows.",
-      image: "https://picsum.photos/800/600?random=4",
-      category: "AI",
-      date: "March 8, 2024",
-      readTime: "6 min read",
-      author: {
-        name: "Alex Rodriguez",
-        avatar: "https://i.pravatar.cc/150?img=4",
-      },
-    },
-  ];
+const NewAndArticle = async () => {
+ 
+  const articles = await getAllblogInfo();
 
   const featuredArticle = articles[0];
   const recentArticles = articles.slice(1);
@@ -84,7 +29,7 @@ const NewAndArticle = () => {
             <div className="lg:flex">
               <div className="lg:flex-1">
                 <img
-                  src={featuredArticle.image}
+                  src={featuredArticle.coverImage}
                   alt={featuredArticle.title}
                   className="h-64 lg:h-96 w-full object-cover"
                 />
@@ -102,7 +47,7 @@ const NewAndArticle = () => {
                   {featuredArticle.title}
                 </h2>
                 <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-                  {featuredArticle.excerpt}
+                  {featuredArticle.shortDescription}
                 </p>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -120,9 +65,9 @@ const NewAndArticle = () => {
                       </p>
                     </div>
                   </div>
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 transform hover:scale-105">
+                  <Link href={`/blog/${featuredArticle._id}`} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 transform hover:scale-105">
                     Read Full Article
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -135,7 +80,7 @@ const NewAndArticle = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
               Recent Articles
             </h2>
-            <button className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2">
+            <Link href="/blog" className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2">
               View All
               <svg
                 className="w-4 h-4"
@@ -150,17 +95,17 @@ const NewAndArticle = () => {
                   d="M9 5l7 7-7 7"
                 />
               </svg>
-            </button>
+            </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recentArticles.map((article) => (
+            {recentArticles.slice(0,3).map((article) => (
               <article
-                key={article.id}
+                key={article._id}
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group"
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src={article.image}
+                    src={article.coverImage}
                     alt={article.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -193,7 +138,7 @@ const NewAndArticle = () => {
                         {article.author.name}
                       </span>
                     </div>
-                    <button className="text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors duration-200 flex items-center gap-1 group-hover:gap-2">
+                    <Link href={`/blog/${article._id}`} className="text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors duration-200 flex items-center gap-1 group-hover:gap-2">
                       Read More
                       <svg
                         className="w-4 h-4 transition-all duration-200"
@@ -208,7 +153,7 @@ const NewAndArticle = () => {
                           d="M9 5l7 7-7 7"
                         />
                       </svg>
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </article>

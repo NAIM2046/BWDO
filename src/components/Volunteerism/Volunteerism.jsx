@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import Link from "next/link";
 
 const Volunteerism = () => {
   const stats = {
@@ -144,12 +145,10 @@ const Volunteerism = () => {
             Join our passionate volunteers and start creating positive change
             today
           </p>
-          <button className="bg-white text-green-600 px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition">
-            Become a Volunteer Now
-          </button>
-          <p className="text-green-200 mt-4 text-sm">
-            No experience required • Flexible hours • Training provided
-          </p>
+          <Link href={"/volunteer"} className="bg-white text-green-600 px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition">
+            Become a Volunteer
+          </Link>
+        
         </motion.div>
       </div>
     </div>
