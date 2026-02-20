@@ -2,6 +2,16 @@ import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
 export async function middleware(req) {
+
+   const { pathname } = req.nextUrl;
+
+  // ✅ Allow login page & login API
+  if (
+    pathname === "/admin-login" ||
+    pathname === "/api/admin/login"
+  ) {
+    return NextResponse.next();
+  }
   const token = req.cookies.get("token")?.value;
 
   //console.log("Middleware token:", token);
@@ -13,9 +23,9 @@ export async function middleware(req) {
   try {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
     const { payload } = await jwtVerify(token, secret);
-    //console.log("Middleware payload:", payload);
+    console.log("Middleware payload:", payload);
 
-    if (payload.id.role !== "admin") {
+    if (payload.role !== "admin") {
       return NextResponse.redirect(new URL("/admin-login", req.url));
     }
 
@@ -27,5 +37,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*" , "/api/admin/:path*"],
 };

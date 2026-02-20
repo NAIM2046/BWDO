@@ -345,7 +345,7 @@ const BlogManagePage = () => {
         }
       )
     };
-    console.log(formData)
+   // console.log(formData)
 
     try {
       if (editingId) {

@@ -1,26 +1,28 @@
 "use client";
+import { YoutubeIcon } from "lucide-react";
 import React, { useState } from "react";
-import { 
-  FaMapMarkerAlt, 
-  FaPhone, 
-  FaEnvelope, 
-  FaFacebookF, 
-  FaInstagram, 
+import { BsYoutube } from "react-icons/bs";
+import {
+  FaMapMarkerAlt,
+  FaPhone,
+  FaEnvelope,
+  FaFacebookF,
+  FaInstagram,
   FaLinkedinIn,
   FaPaperPlane,
   FaClock,
   FaGlobe,
-  FaTimes
+  FaTimes,
 } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 
 const ContactUs = () => {
-    const [formData, setFormData] = useState({
-    region:"Contact Us",
+  const [formData, setFormData] = useState({
+    region: "Contact Us",
     name: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -28,14 +30,14 @@ const ContactUs = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -51,9 +53,9 @@ const ContactUs = () => {
           name: "",
           email: "",
           subject: "",
-          message: ""
+          message: "",
         });
-        
+
         // Hide success message after 5 seconds
         setTimeout(() => {
           setSuccess(false);
@@ -80,8 +82,16 @@ const ContactUs = () => {
           <div className="flex items-start">
             <div className="flex-shrink-0">
               <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                <svg
+                  className="w-4 h-4 text-green-600"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
             </div>
@@ -90,7 +100,8 @@ const ContactUs = () => {
                 Message sent successfully!
               </p>
               <p className="mt-1 text-sm text-green-600">
-                Thank you for contacting us. We'll get back to you within 24 hours.
+                Thank you for contacting us. We'll get back to you within 24
+                hours.
               </p>
             </div>
             <button
@@ -120,15 +131,22 @@ const ContactUs = () => {
                 <FaPaperPlane className="w-5 h-5 text-blue-500" />
               </div>
               <div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">Send us a Message</h2>
-                <p className="text-slate-500 text-sm mt-1">We typically respond within 24 hours</p>
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">
+                  Send us a Message
+                </h2>
+                <p className="text-slate-500 text-sm mt-1">
+                  We typically respond within 24 hours
+                </p>
               </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="block text-sm font-semibold text-slate-700">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-semibold text-slate-700"
+                  >
                     Full Name *
                   </label>
                   <input
@@ -143,7 +161,10 @@ const ContactUs = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="email" className="block text-sm font-semibold text-slate-700">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-semibold text-slate-700"
+                  >
                     Email Address *
                   </label>
                   <input
@@ -160,7 +181,10 @@ const ContactUs = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="subject" className="block text-sm font-semibold text-slate-700">
+                <label
+                  htmlFor="subject"
+                  className="block text-sm font-semibold text-slate-700"
+                >
                   Subject *
                 </label>
                 <input
@@ -176,7 +200,10 @@ const ContactUs = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="message" className="block text-sm font-semibold text-slate-700">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-semibold text-slate-700"
+                >
                   Message *
                 </label>
                 <textarea
@@ -194,7 +221,7 @@ const ContactUs = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 disabled:from-blue-300 disabled:to-cyan-300 text-white py-4 px-6 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:transform-none disabled:hover:shadow-lg"
+                className="w-full bg-gradient-to-r from-green-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 disabled:from-blue-300 disabled:to-cyan-300 text-white py-4 px-6 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:transform-none disabled:hover:shadow-lg"
               >
                 {isSubmitting ? (
                   <>
@@ -223,7 +250,9 @@ const ContactUs = () => {
                 <div className="w-10 h-10 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-xl flex items-center justify-center mr-4 border border-emerald-200/50">
                   <FaEnvelope className="w-5 h-5 text-emerald-500" />
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">Contact Information</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">
+                  Contact Information
+                </h2>
               </div>
 
               <div className="space-y-6">
@@ -233,10 +262,15 @@ const ContactUs = () => {
                     <FaMapMarkerAlt className="w-5 h-5 text-blue-400" />
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-slate-800 mb-1">Our Address</h3>
+                    <h3 className="text-base font-semibold text-slate-800 mb-1">
+                      Our Address
+                    </h3>
                     <p className="text-slate-600 leading-relaxed">
-                      Dhaka, Savar, Bangladesh<br />
-                      <span className="text-sm text-slate-500">Main Office Location</span>
+                      Ambagan gate, Jahangirnagar University, Savar, Dhaka
+                      <br />
+                      <span className="text-sm text-slate-500">
+                        Main Office Location
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -247,9 +281,10 @@ const ContactUs = () => {
                     <FaPhone className="w-5 h-5 text-emerald-400" />
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-slate-800 mb-1">Phone Number</h3>
-                    <p className="text-slate-600">+880 1234-567890</p>
-                    <p className="text-slate-600 text-sm">+880 9876-543210 (Alternate)</p>
+                    <h3 className="text-base font-semibold text-slate-800 mb-1">
+                      Phone Number
+                    </h3>
+                    <p className="text-slate-600">+880 1979-438984</p>
                   </div>
                 </div>
 
@@ -259,9 +294,13 @@ const ContactUs = () => {
                     <FaEnvelope className="w-5 h-5 text-violet-400" />
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-slate-800 mb-1">Email Address</h3>
-                    <p className="text-slate-600">contact@bwdo.org</p>
-                    <p className="text-slate-600 text-sm">info@bwdo.org</p>
+                    <h3 className="text-base font-semibold text-slate-800 mb-1">
+                      Email Address
+                    </h3>
+
+                    <p className="text-slate-600 text-sm">
+                      officialbrotherhood2016@gmail.com
+                    </p>
                   </div>
                 </div>
 
@@ -271,10 +310,15 @@ const ContactUs = () => {
                     <FaClock className="w-5 h-5 text-amber-400" />
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-slate-800 mb-1">Office Hours</h3>
+                    <h3 className="text-base font-semibold text-slate-800 mb-1">
+                      Office Hours
+                    </h3>
                     <p className="text-slate-600 leading-relaxed">
-                      Sunday - Thursday: 9:00 AM - 6:00 PM<br />
-                      <span className="text-sm text-slate-500">Friday - Saturday: Closed</span>
+                      Sunday - Thursday: 9:00 AM - 6:00 PM
+                      <br />
+                      <span className="text-sm text-slate-500">
+                        Friday - Saturday: Closed
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -282,13 +326,32 @@ const ContactUs = () => {
 
               {/* Social Media */}
               <div className="mt-8 pt-6 border-t border-slate-200/60">
-                <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">Follow Us On Social Media</h3>
+                <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">
+                  Follow Us On Social Media
+                </h3>
                 <div className="flex justify-center space-x-3">
                   {[
-                    { icon: FaFacebookF, color: "bg-blue-400 hover:bg-blue-500", href: "#" },
-                    { icon: FaInstagram, color: "bg-gradient-to-r from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600", href: "#" },
-                    { icon: FaLinkedinIn, color: "bg-blue-400 hover:bg-blue-500", href: "#" },
-                    { icon: FaX, color: "bg-black hover:bg-gray-800", href: "#" }
+                    {
+                      icon: FaFacebookF,
+                      color: "bg-blue-400 hover:bg-blue-500",
+                      href: "https://www.facebook.com/profile.php?id=100077335417735",
+                    },
+                    {
+                      icon: FaInstagram,
+                      color:
+                        "bg-gradient-to-r from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600",
+                      href: "https://www.instagram.com/brotherhood_d.o_?igsh=ZThjaWM4cnFocnV6",
+                    },
+                    {
+                      icon: FaLinkedinIn,
+                      color: "bg-blue-400 hover:bg-blue-500",
+                      href: "https://www.linkedin.com/in/brotherhood-welfare-development-organization-5115212b3",
+                    },
+                    {
+                      icon: BsYoutube,
+                      color: "bg-black hover:bg-gray-800",
+                      href: "https://youtube.com/@officialbrotherhood16?si=xAnWGWKwH94_juve",
+                    },
                   ].map((social, index) => (
                     <a
                       key={index}
@@ -303,29 +366,18 @@ const ContactUs = () => {
             </div>
           </div>
         </div>
-
-        {/* Map Section */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-slate-200/60 shadow-sm mt-10">
-          <div className="flex items-center mb-6">
-            <div className="w-10 h-10 bg-gradient-to-r from-rose-100 to-orange-100 rounded-xl flex items-center justify-center mr-4 border border-rose-200/50">
-              <FaGlobe className="w-5 h-5 text-rose-400" />
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-slate-800">Find Us Here</h3>
-          </div>
-          <div className="bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl h-48 sm:h-56 flex items-center justify-center border-2 border-dashed border-slate-300/60">
-            <div className="text-center text-slate-500">
-              <FaMapMarkerAlt className="w-12 h-12 mx-auto mb-3 text-rose-300" />
-              <p className="font-medium">Interactive Map</p>
-              <p className="text-sm mt-1">Google Maps integration available</p>
-            </div>
-          </div>
-        </div>
       </div>
 
       <style jsx>{`
         @keyframes fade-in {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
         .animate-fade-in {
           animation: fade-in 0.3s ease-out;

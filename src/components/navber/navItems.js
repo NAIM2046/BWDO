@@ -67,7 +67,7 @@ export const navItems = [
         label: "Self-Employment",
       },
       {
-        href: "/focusarea/sport/2",
+        href: "/focusarea/sport/6",
         icon: MdOutlineSportsEsports,
         label: "Sport",
       },

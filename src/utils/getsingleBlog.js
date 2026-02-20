@@ -1,7 +1,7 @@
 export default async function getsingleBlog(id) {
         try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${id}`, {
-            next: { revalidate: 3600 } // 1 hour cache
+            next: { revalidate: 3600 } 
         });
 
         if (!res.ok) {

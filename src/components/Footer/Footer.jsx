@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import {
   FaFacebookF,
- 
   FaInstagram,
   FaLinkedinIn,
   FaMapMarkerAlt,
@@ -45,7 +44,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4 justify-center md:justify-start">
               <a
-                href="#"
+                href="https://www.facebook.com/profile.php?id=100077335417735"
                 className="bg-gray-800 hover:bg-blue-600 text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 transform hover:scale-110"
               >
                 <FaFacebookF className="w-4 h-4" />
@@ -66,7 +65,7 @@ const Footer = () => {
                 <span className="sr-only">Instagram</span>
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/brotherhood-welfare-development-organization-5115212b3/"
                 className="bg-gray-800 hover:bg-blue-700 text-gray-300 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 transform hover:scale-110"
               >
                 <FaLinkedinIn className="w-4 h-4" />
@@ -97,14 +96,7 @@ const Footer = () => {
                   Our Projects
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/get-involved"
-                  className="text-gray-300 hover:text-white transition-colors duration-300 hover:underline"
-                >
-                  Get Involved
-                </Link>
-              </li>
+
               <li>
                 <Link
                   href="/volunteer"
@@ -159,7 +151,7 @@ const Footer = () => {
                   href={`/focusarea/sport/${2}`}
                   className="text-gray-300 hover:text-white transition-colors duration-300 hover:underline"
                 >
-                 Sport
+                  Sport
                 </Link>
               </li>
               <li>
@@ -182,16 +174,18 @@ const Footer = () => {
               <div className="flex items-start max-w-xs">
                 <FaMapMarkerAlt className="h-5 w-5 text-blue-400 mt-0.5 mr-3 flex-shrink-0" />
                 <span className="text-gray-300 text-sm">
-                  123 Charity Street, Hope City, HC 12345
+                  Ambagan gate, Jahangirnagar University, Savar, Dhaka
                 </span>
               </div>
               <div className="flex items-center justify-center md:justify-start">
                 <FaPhone className="h-5 w-5 text-blue-400 mr-3 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">+1 (555) 123-4567</span>
+                <span className="text-gray-300 text-sm">+8801979438984</span>
               </div>
               <div className="flex items-center justify-center md:justify-start">
                 <FaEnvelope className="h-5 w-5 text-blue-400 mr-3 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">info@bwdo.org</span>
+                <span className="text-gray-300 text-sm">
+                  officialbrotherhood2016@gmail.com
+                </span>
               </div>
             </div>
 
@@ -223,10 +217,16 @@ const Footer = () => {
               &copy; {new Date().getFullYear()} Brotherhood Welfare and
               Development Organization. All rights reserved.
             </div>
-             <div className="text-gray-400 flex gap-2 items-center text-xs md:text-sm">
-                
-                <span> Devlopment by</span> <Link className="hover:text-green-400" href={'https://www.nexovatelabs.com/'}> <u>NexoVateLabs</u></Link>
-              </div>
+            <div className="text-gray-400 flex gap-2 items-center text-xs md:text-sm">
+              <span> Devlopment by</span>{" "}
+              <Link
+                className="hover:text-green-400"
+                href={"https://www.nexovatelabs.com/"}
+              >
+                {" "}
+                <u>NexoVateLabs</u>
+              </Link>
+            </div>
             <div className="flex flex-wrap justify-center space-x-4 md:space-x-6 text-sm">
               <Link
                 href="/privacy"
@@ -246,7 +246,6 @@ const Footer = () => {
               >
                 Disclaimer
               </Link>
-             
             </div>
           </div>
         </div>

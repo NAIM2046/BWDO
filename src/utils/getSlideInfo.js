@@ -3,7 +3,7 @@
 export async function getSlideInfo() {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slide`, {
-            next: { revalidate: 360 } // 1 hour cache
+            next: { revalidate: 3600 } // 1 hour cache
         });
 
         if (!res.ok) {
