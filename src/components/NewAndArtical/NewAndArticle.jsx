@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 
 const NewAndArticle = async () => {
- 
   const articles = await getAllblogInfo();
 
   const featuredArticle = articles[0];
@@ -29,8 +28,8 @@ const NewAndArticle = async () => {
             <div className="lg:flex">
               <div className="lg:flex-1">
                 <img
-                  src={featuredArticle.coverImage}
-                  alt={featuredArticle.title}
+                  src={featuredArticle?.coverImage}
+                  alt={featuredArticle?.title}
                   className="h-64 lg:h-96 w-full object-cover"
                 />
               </div>
@@ -65,7 +64,10 @@ const NewAndArticle = async () => {
                       </p>
                     </div>
                   </div>
-                  <Link href={`/blog/${featuredArticle._id}`} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 transform hover:scale-105">
+                  <Link
+                    href={`/blog/${featuredArticle._id}`}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 transform hover:scale-105"
+                  >
                     Read Full Article
                   </Link>
                 </div>
@@ -80,7 +82,10 @@ const NewAndArticle = async () => {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
               Recent Articles
             </h2>
-            <Link href="/blog" className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2">
+            <Link
+              href="/blog"
+              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2"
+            >
               View All
               <svg
                 className="w-4 h-4"
@@ -98,7 +103,7 @@ const NewAndArticle = async () => {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recentArticles.slice(0,3).map((article) => (
+            {recentArticles.slice(0, 3).map((article) => (
               <article
                 key={article._id}
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group"
@@ -138,7 +143,10 @@ const NewAndArticle = async () => {
                         {article.author.name}
                       </span>
                     </div>
-                    <Link href={`/blog/${article._id}`} className="text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors duration-200 flex items-center gap-1 group-hover:gap-2">
+                    <Link
+                      href={`/blog/${article._id}`}
+                      className="text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors duration-200 flex items-center gap-1 group-hover:gap-2"
+                    >
                       Read More
                       <svg
                         className="w-4 h-4 transition-all duration-200"

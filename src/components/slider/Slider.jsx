@@ -1,17 +1,9 @@
 "use client";
 
-
-
 import React, { useState, useEffect } from "react";
 
 const Slider = ({ slides }) => {
-
   const [currentSlide, setCurrentSlide] = useState(0);
-
-
-
-
-
 
   const nextSlide = () => {
     if (slides.length > 0) {
@@ -39,16 +31,15 @@ const Slider = ({ slides }) => {
     }
   }, [currentSlide, slides.length]);
 
-
-
-
   // Empty State
   if (slides.length === 0) {
     return (
       <div className="relative w-full h-[400px] sm:h-[400px] md:h-[400px] lg:h-[500px] xl:h-[600px] bg-gradient-to-r from-blue-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">📷</div>
-          <h3 className="text-2xl font-bold text-gray-700 mb-2">No Slides Available</h3>
+          <h3 className="text-2xl font-bold text-gray-700 mb-2">
+            No Slides Available
+          </h3>
           <p className="text-gray-600 mb-4">Add some slides to get started</p>
         </div>
       </div>
@@ -59,13 +50,14 @@ const Slider = ({ slides }) => {
     <div className="relative w-full h-[400px] sm:h-[400px] md:h-[400px] lg:h-[500px] xl:h-[600px] overflow-hidden bg-black">
       {/* Slides */}
       <div className="relative w-full h-full">
-        {slides.map((slide, index) => (
+        {slides?.map((slide, index) => (
           <div
             key={slide._id}
-            className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out ${index === currentSlide
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-105"
-              }`}
+            className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out ${
+              index === currentSlide
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-105"
+            }`}
             style={{
               backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url(${slide.image})`,
               backgroundSize: "cover",
@@ -74,10 +66,11 @@ const Slider = ({ slides }) => {
             }}
           >
             <div
-              className={`flex items-center justify-center h-full transition-all duration-1000 delay-200 ${index === currentSlide
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-                }`}
+              className={`flex items-center justify-center h-full transition-all duration-1000 delay-200 ${
+                index === currentSlide
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              }`}
             >
               <div className="text-center text-white px-4 sm:px-6 max-w-2xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight font-poppins">
@@ -144,10 +137,11 @@ const Slider = ({ slides }) => {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentSlide
-              ? "bg-white scale-125 shadow-lg"
-              : "bg-white/50 hover:bg-white/70"
-              }`}
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+              index === currentSlide
+                ? "bg-white scale-125 shadow-lg"
+                : "bg-white/50 hover:bg-white/70"
+            }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
