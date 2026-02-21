@@ -4,7 +4,7 @@ import Admin from "../../../../../lib/model/user";
 
 export  const POST = async (req) => {
     try {
-        connectDB() ;
+       await connectDB() ;
         const { email, password } = await req.json();
          const exist = await Admin.findOne({email}) 
             if (exist) {

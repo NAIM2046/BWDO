@@ -8,7 +8,8 @@ export async function middleware(req) {
   // ✅ Allow login page & login API
   if (
     pathname === "/admin-login" ||
-    pathname === "/api/admin/login"
+    pathname === "/api/admin/login" ||
+    pathname === "/api/admin/create"
   ) {
     return NextResponse.next();
   }
