@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import getAllTeam from "@/utils/getAllTeam";
 import Link from "next/link"; // Link কম্পোনেন্ট ব্যবহার করা ভালো
 

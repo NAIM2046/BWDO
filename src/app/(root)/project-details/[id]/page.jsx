@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import ProjectDetail from "@/components/projectdetail/ProjectDetail";
 import getsingleProject from "@/utils/getsingleProject";
 

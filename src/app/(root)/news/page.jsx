@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import getnewsinfo from "@/utils/getnewsInfo";
 import Image from "next/image";
 // প্রফেশনাল আইকনের জন্য lucide-react ব্যবহার করা হলো

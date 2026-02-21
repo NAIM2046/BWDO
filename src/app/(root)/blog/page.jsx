@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import BlogCard from "@/components/blogCard/BlogCard";
 import getAllblogInfo from "@/utils/getAllblogInfo";
 

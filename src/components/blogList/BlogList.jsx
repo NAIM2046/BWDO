@@ -104,9 +104,9 @@ export default function BlogList({ setFormData, setEditingId }) {
                   <span className="text-sm text-gray-500">{blog.date}</span>
                 </div>
 
-                {blog.category && (
+                {blog?.category && (
                   <span className="inline-block px-3 py-1 text-xs font-semibold text-blue-600 bg-blue-100 rounded-full mb-4">
-                    {blog.category}
+                    {blog?.category}
                   </span>
                 )}
 

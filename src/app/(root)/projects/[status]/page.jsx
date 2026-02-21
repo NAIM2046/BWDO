@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import getprojectinfo from "@/utils/getprojectinfo";
 import Link from "next/link";
 
@@ -74,7 +75,7 @@ export default async function ProjectPage({ params }) {
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-2">{project.title}</h2>
               <p className="text-sm text-gray-500 mb-2">
-                Category: {project.category}
+                Category: {project?.category}
               </p>
               <p className="text-gray-700 text-sm mb-4">
                 {project.description.substring(0, 120)}...

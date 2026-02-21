@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import PhotosPage from "@/components/PhotosPage/PhotosPage";
 import getAllphoto from "@/utils/getAllphoto";
 

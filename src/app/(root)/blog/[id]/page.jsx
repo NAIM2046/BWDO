@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import getsingleBlog from "@/utils/getsingleBlog";
 import Image from "next/image";
 import React from "react";
@@ -130,7 +131,7 @@ export default async function BlogDetailPage({ params }) {
           {/* Tags & Category */}
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
-              {blogDetail.category}
+              {blogDetail?.category}
             </span>
             {blogDetail.tags.map((t) => (
               <span

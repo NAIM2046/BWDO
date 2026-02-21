@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import NewAndArticle from "@/components/NewAndArtical/NewAndArticle";
 import FocusArea from "@/components/ourfouceArea/FocusArea";
 import Slider from "@/components/slider/Slider";
