@@ -88,9 +88,14 @@ const TeamManagePage = () => {
     try {
       if (editingId) {
         // 🟡 Update
-        const res = await axiosPrivate.put("/api/team", { id: editingId, ...formData });
+        const res = await axiosPrivate.put("/api/team", {
+          id: editingId,
+          ...formData,
+        });
         if (res.status === 200) {
           alert("✅ Team member updated successfully!");
+
+          await fetch(`/api/revalidate?tag=team`); // Revalidate team list
         } else {
           alert("❌ Failed to update team member");
         }
@@ -98,6 +103,7 @@ const TeamManagePage = () => {
         // 🟡 Add new
         const res = await axiosPrivate.post("/api/team", formData);
         if (res.status === 201) {
+          await fetch(`/api/revalidate?tag=team`); // Revalidate team list
           alert("✅ Team member added successfully!");
         } else {
           alert("❌ Failed to add team member");
@@ -175,14 +181,19 @@ const TeamManagePage = () => {
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             👥 Team Management
           </h1>
-          <p className="text-gray-600">Manage your team members and their information</p>
+          <p className="text-gray-600">
+            Manage your team members and their information
+          </p>
         </div>
 
         {/* Tab Navigation */}
         <div className="bg-white rounded-lg shadow-sm border mb-6">
           <div className="flex border-b">
             <button
-              onClick={() => { setActiveTab("list"); resetForm(); }}
+              onClick={() => {
+                setActiveTab("list");
+                resetForm();
+              }}
               className={`flex-1 py-4 px-6 text-center font-medium ${
                 activeTab === "list"
                   ? "text-blue-600 border-b-2 border-blue-600"
@@ -324,7 +335,10 @@ const TeamManagePage = () => {
                     {editingId ? "Edit Team Member" : "Add New Team Member"}
                   </h3>
                   <button
-                    onClick={() => { setActiveTab("list"); resetForm(); }}
+                    onClick={() => {
+                      setActiveTab("list");
+                      resetForm();
+                    }}
                     className="text-gray-600 hover:text-gray-800 transition-colors flex items-center gap-2"
                   >
                     ← Back to Team
@@ -450,8 +464,10 @@ const TeamManagePage = () => {
 
                       {/* Social Links */}
                       <div className="space-y-3">
-                        <h4 className="font-medium text-gray-700">Social Links</h4>
-                        
+                        <h4 className="font-medium text-gray-700">
+                          Social Links
+                        </h4>
+
                         <div>
                           <label className="block text-xs text-gray-600 mb-1">
                             Facebook URL
@@ -501,7 +517,10 @@ const TeamManagePage = () => {
                   <div className="flex gap-4 pt-4 border-t border-gray-200">
                     <button
                       type="button"
-                      onClick={() => { setActiveTab("list"); resetForm(); }}
+                      onClick={() => {
+                        setActiveTab("list");
+                        resetForm();
+                      }}
                       className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg hover:bg-gray-300 transition-colors font-medium"
                     >
                       Cancel

@@ -56,9 +56,9 @@ const NewsManagePage = () => {
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
+
     // Validate file type
-    if (!file.type.startsWith('image/')) {
+    if (!file.type.startsWith("image/")) {
       showMessage("Please select a valid image file", "error");
       return;
     }
@@ -103,13 +103,14 @@ const NewsManagePage = () => {
       if (editingId) {
         // Update existing news
         await AxiosSecure.put(`/api/news/${editingId}`, formData);
+        // Revalidate specific news item
         showMessage("✅ News updated successfully!");
       } else {
         // Add new news
         await AxiosSecure.post("/api/news", formData);
         showMessage("✅ News added successfully!");
       }
-
+      await fetch(`/api/revalidate?tag=news`);
       resetForm();
       fetchNews();
     } catch (error) {
@@ -136,11 +137,13 @@ const NewsManagePage = () => {
 
   // ✅ Handle Delete
   const handleDelete = async (id) => {
-    const newsItem = newsList.find(news => news._id === id);
-    if (!confirm(`Are you sure you want to delete "${newsItem?.title}"?`)) return;
+    const newsItem = newsList.find((news) => news._id === id);
+    if (!confirm(`Are you sure you want to delete "${newsItem?.title}"?`))
+      return;
 
     try {
       await AxiosSecure.delete(`/api/news/${id}`);
+      await fetch(`/api/revalidate?tag=news`);
       showMessage("🗑️ News deleted successfully!");
       fetchNews();
     } catch (error) {
@@ -160,24 +163,34 @@ const NewsManagePage = () => {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">📰 News Management</h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+            📰 News Management
+          </h1>
           <p className="text-gray-600 text-lg">
-            {editingId ? "Edit existing news article" : "Create and manage news articles"}
+            {editingId
+              ? "Edit existing news article"
+              : "Create and manage news articles"}
           </p>
         </div>
 
         {/* Alert Message */}
         {message.text && (
-          <div className={`mb-6 p-4 rounded-lg border-l-4 ${
-            message.type === "error" 
-              ? "bg-red-50 border-red-500 text-red-700" 
-              : message.type === "info"
-              ? "bg-blue-50 border-blue-500 text-blue-700"
-              : "bg-green-50 border-green-500 text-green-700"
-          }`}>
+          <div
+            className={`mb-6 p-4 rounded-lg border-l-4 ${
+              message.type === "error"
+                ? "bg-red-50 border-red-500 text-red-700"
+                : message.type === "info"
+                  ? "bg-blue-50 border-blue-500 text-blue-700"
+                  : "bg-green-50 border-green-500 text-green-700"
+            }`}
+          >
             <div className="flex items-center">
               <span className="text-lg mr-2">
-                {message.type === "error" ? "❌" : message.type === "info" ? "ℹ️" : "✅"}
+                {message.type === "error"
+                  ? "❌"
+                  : message.type === "info"
+                    ? "ℹ️"
+                    : "✅"}
               </span>
               <span className="font-medium">{message.text}</span>
             </div>
@@ -204,7 +217,9 @@ const NewsManagePage = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Title */}
               <div>
-                <label className="block text-gray-700 font-medium mb-2">News Title</label>
+                <label className="block text-gray-700 font-medium mb-2">
+                  News Title
+                </label>
                 <input
                   type="text"
                   name="title"
@@ -218,7 +233,9 @@ const NewsManagePage = () => {
 
               {/* Description */}
               <div>
-                <label className="block text-gray-700 font-medium mb-2">Description</label>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Description
+                </label>
                 <textarea
                   name="description"
                   value={formData.description}
@@ -243,17 +260,21 @@ const NewsManagePage = () => {
                     onChange={handleImageChange}
                     className="w-full border border-gray-300 rounded-xl p-3 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition"
                   />
-                  
+
                   {imageLoading && (
                     <div className="flex items-center justify-center p-4">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                      <span className="ml-3 text-gray-600">Uploading image...</span>
+                      <span className="ml-3 text-gray-600">
+                        Uploading image...
+                      </span>
                     </div>
                   )}
 
                   {formData.imageUrl && (
                     <div className="mt-2">
-                      <p className="text-sm text-green-600 mb-2">✅ Image ready!</p>
+                      <p className="text-sm text-green-600 mb-2">
+                        ✅ Image ready!
+                      </p>
                       <img
                         src={formData.imageUrl}
                         alt="Preview"
@@ -268,7 +289,9 @@ const NewsManagePage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Link */}
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">News Link</label>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    News Link
+                  </label>
                   <input
                     type="url"
                     name="link"
@@ -282,7 +305,9 @@ const NewsManagePage = () => {
 
                 {/* Author */}
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">Author</label>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Author
+                  </label>
                   <input
                     type="text"
                     name="author"
@@ -303,8 +328,8 @@ const NewsManagePage = () => {
                   isLoading || imageLoading
                     ? "bg-gray-400 cursor-not-allowed"
                     : editingId
-                    ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                    : "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                      ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                      : "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                 }`}
               >
                 {isLoading ? (
@@ -324,7 +349,9 @@ const NewsManagePage = () => {
           {/* News List Section */}
           <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-semibold text-gray-800">📋 All News Articles</h3>
+              <h3 className="text-2xl font-semibold text-gray-800">
+                📋 All News Articles
+              </h3>
               <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
                 {newsList.length} articles
               </span>
@@ -337,8 +364,12 @@ const NewsManagePage = () => {
             ) : newsList.length === 0 ? (
               <div className="text-center py-12">
                 <div className="text-6xl mb-4">📰</div>
-                <h4 className="text-xl font-semibold text-gray-600 mb-2">No News Articles</h4>
-                <p className="text-gray-500">Get started by creating your first news article!</p>
+                <h4 className="text-xl font-semibold text-gray-600 mb-2">
+                  No News Articles
+                </h4>
+                <p className="text-gray-500">
+                  Get started by creating your first news article!
+                </p>
               </div>
             ) : (
               <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
@@ -364,7 +395,9 @@ const NewsManagePage = () => {
                           <div className="flex items-center space-x-4 text-sm text-gray-500">
                             <span>By {news.author}</span>
                             <span>•</span>
-                            <span>{new Date(news.createdAt).toLocaleDateString()}</span>
+                            <span>
+                              {new Date(news.createdAt).toLocaleDateString()}
+                            </span>
                           </div>
                           <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition">
                             <button

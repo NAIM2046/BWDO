@@ -140,11 +140,15 @@ const ProjectManagePage = () => {
       if (editingProject) {
         // Update existing project
         await AxiosSecure.put(`/api/project/${editingProject._id}`, formData);
+        await fetch(`/api/revalidate?tag=project-${editingProject._id}`);
+        alert("Project updated successfully!");
       } else {
         // Create new project
         await AxiosSecure.post("/api/project", formData);
-      }
 
+        alert("Project created successfully!");
+      }
+      await fetch(`/api/revalidate?tag=projects`);
       fetchProject(); // Refresh the projects list
       resetForm();
     } catch (error) {

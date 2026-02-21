@@ -8,7 +8,7 @@ const SlideManagePage = () => {
   const [slides, setSlides] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
-    
+
     description: "",
     number: "",
     image: "",
@@ -72,10 +72,12 @@ const SlideManagePage = () => {
       const res = await axiosPrivate.post("/api/slide", formData);
 
       if (res.status === 201) {
+        await fetch(`/api/revalidate?tag=slides`);
         alert("✅ Slide created successfully!");
+
         setFormData({
           title: "",
-         
+
           description: "",
           number: "",
           image: "",
@@ -100,6 +102,7 @@ const SlideManagePage = () => {
       const res = await axiosPrivate.delete("/api/slide", { data: { id } });
 
       if (res.status === 200) {
+        await fetch(`/api/revalidate?tag=slides`);
         alert("Slide deleted successfully!");
         fetchSlides();
       } else {
@@ -197,7 +200,7 @@ const SlideManagePage = () => {
                                 #{slide.number}
                               </span>
                             </div>
-                            
+
                             {slide.description && (
                               <p className="text-gray-500 text-sm truncate">
                                 {slide.description}
@@ -250,8 +253,6 @@ const SlideManagePage = () => {
                           required
                         />
                       </div>
-
-                      
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">

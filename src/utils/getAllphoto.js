@@ -6,7 +6,7 @@ export default async function getAllphoto() {
             : 'http://127.0.0.1:8083'; // 🌐 লাইভ সার্ভারের (VPS) জন্য
 
         const res = await fetch(`${baseUrl}/api/images`, {
-            next: { revalidate: 3600 } // 1 hour cache
+            next: [{tags: ['images']}] 
         });
 
         if (!res.ok) {

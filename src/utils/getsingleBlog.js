@@ -6,7 +6,7 @@ export default async function getsingleBlog(id) {
             : 'http://127.0.0.1:8083'; // 🌐 লাইভ সার্ভারের (VPS) জন্য
 
         const res = await fetch(`${baseUrl}/api/blogs/${id}`, {
-            next: { revalidate: 3600 } 
+            next: { tags: [`blog-${id}`] } // এই ট্যাগ দিয়ে ব্লগের ক্যাশ ম্যানেজ করা হবে
         });
 
         if (!res.ok) {

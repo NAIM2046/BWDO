@@ -6,7 +6,7 @@ export default async function getAllTeam() {
             : 'http://127.0.0.1:8083'; // 🌐 লাইভ সার্ভারের (VPS) জন্য
 
         const res = await fetch(`${baseUrl}/api/team`, {
-            next: { revalidate: 3600 } // 1 hour cache
+            next: [{tags: ['team']}]
         });
 
         if (!res.ok) {

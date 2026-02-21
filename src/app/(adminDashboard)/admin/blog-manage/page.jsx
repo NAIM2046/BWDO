@@ -26,16 +26,16 @@ const BlogManagePage = () => {
     author: {
       name: "",
       role: "",
-      avatar: ""
+      avatar: "",
     },
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toISOString().split("T")[0],
     readTime: "",
     tags: [],
     category: "",
-    shortDescription : "",
+    shortDescription: "",
     content: [],
     gallery: [],
-    videoUrl: ""
+    videoUrl: "",
   });
 
   const [tagInput, setTagInput] = useState("");
@@ -45,12 +45,12 @@ const BlogManagePage = () => {
     const handleBeforeUnload = (e) => {
       if (unsavedChanges && editingId) {
         e.preventDefault();
-        e.returnValue = '';
+        e.returnValue = "";
       }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [unsavedChanges, editingId]);
 
   // Success/Error message helper
@@ -81,19 +81,19 @@ const BlogManagePage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name.startsWith('author.')) {
-      const authorField = name.split('.')[1];
-      setFormData(prev => ({
+    if (name.startsWith("author.")) {
+      const authorField = name.split(".")[1];
+      setFormData((prev) => ({
         ...prev,
         author: {
           ...prev.author,
-          [authorField]: value
-        }
+          [authorField]: value,
+        },
       }));
     } else {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        [name]: value
+        [name]: value,
       }));
     }
 
@@ -102,12 +102,12 @@ const BlogManagePage = () => {
 
   // ✅ Handle tag input
   const handleTagInput = (e) => {
-    if (e.key === 'Enter' && tagInput.trim()) {
+    if (e.key === "Enter" && tagInput.trim()) {
       e.preventDefault();
       if (!formData.tags.includes(tagInput.trim())) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
-          tags: [...prev.tags, tagInput.trim()]
+          tags: [...prev.tags, tagInput.trim()],
         }));
         setUnsavedChanges(true);
       }
@@ -116,20 +116,23 @@ const BlogManagePage = () => {
   };
 
   const removeTag = (tagToRemove) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
+      tags: prev.tags.filter((tag) => tag !== tagToRemove),
     }));
     setUnsavedChanges(true);
   };
 
   // ✅ Validate file type
   const isValidImageFile = (file) => {
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    const validTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
     const maxSize = 10 * 1024 * 1024; // 5MB
 
     if (!validTypes.includes(file.type)) {
-      showMessage("Please select a valid image file (JPEG, PNG, WebP, or GIF)", "error");
+      showMessage(
+        "Please select a valid image file (JPEG, PNG, WebP, or GIF)",
+        "error",
+      );
       return false;
     }
 
@@ -147,7 +150,7 @@ const BlogManagePage = () => {
     if (!file) return;
 
     if (!isValidImageFile(file)) {
-      e.target.value = '';
+      e.target.value = "";
       return;
     }
 
@@ -156,11 +159,11 @@ const BlogManagePage = () => {
       const imageUrl = await uploadImageToImgBB(file);
 
       if (type === "cover") {
-        setFormData(prev => ({ ...prev, coverImage: imageUrl }));
+        setFormData((prev) => ({ ...prev, coverImage: imageUrl }));
       } else if (type === "author") {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
-          author: { ...prev.author, avatar: imageUrl }
+          author: { ...prev.author, avatar: imageUrl },
         }));
       }
 
@@ -171,7 +174,7 @@ const BlogManagePage = () => {
       showMessage("❌ Image upload failed", "error");
     } finally {
       setImageLoading(false);
-      e.target.value = ''; // Reset file input
+      e.target.value = ""; // Reset file input
     }
   }, []);
 
@@ -181,7 +184,7 @@ const BlogManagePage = () => {
     if (!files.length) return;
 
     // Validate all files first
-    const validFiles = files.filter(file => {
+    const validFiles = files.filter((file) => {
       if (!isValidImageFile(file)) {
         return false;
       }
@@ -189,27 +192,28 @@ const BlogManagePage = () => {
     });
 
     if (validFiles.length === 0) {
-      e.target.value = '';
+      e.target.value = "";
       return;
     }
 
     setImageLoading(true);
     try {
-      const uploadPromises = validFiles.map(file =>
-        uploadImageToImgBB(file).catch(error => {
+      const uploadPromises = validFiles.map((file) =>
+        uploadImageToImgBB(file).catch((error) => {
           console.error(`Failed to upload ${file.name}:`, error);
           showMessage(`❌ Failed to upload ${file.name}`, "error");
           return null;
-        })
+        }),
       );
 
-      const uploadedUrls = (await Promise.all(uploadPromises))
-        .filter(url => url !== null);
+      const uploadedUrls = (await Promise.all(uploadPromises)).filter(
+        (url) => url !== null,
+      );
 
       if (uploadedUrls.length > 0) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
-          gallery: [...prev.gallery, ...uploadedUrls]
+          gallery: [...prev.gallery, ...uploadedUrls],
         }));
         setUnsavedChanges(true);
         showMessage(`✅ ${uploadedUrls.length} image(s) uploaded to gallery!`);
@@ -219,7 +223,7 @@ const BlogManagePage = () => {
       showMessage("❌ Gallery upload failed", "error");
     } finally {
       setImageLoading(false);
-      e.target.value = ''; // Reset file input
+      e.target.value = ""; // Reset file input
     }
   }, []);
 
@@ -229,45 +233,56 @@ const BlogManagePage = () => {
       type,
       text: "",
       imageUrl: "",
-
     };
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      content: [...prev.content, newBlock]
+      content: [...prev.content, newBlock],
     }));
     setUnsavedChanges(true);
   }, []);
 
-  const updateContentBlock = useCallback((index, field, value) => {
-    const updatedContent = [...formData.content];
-    updatedContent[index] = {
-      ...updatedContent[index],
-      [field]: value
-    };
-    setFormData(prev => ({ ...prev, content: updatedContent }));
-    setUnsavedChanges(true);
-  }, [formData.content]);
+  const updateContentBlock = useCallback(
+    (index, field, value) => {
+      const updatedContent = [...formData.content];
+      updatedContent[index] = {
+        ...updatedContent[index],
+        [field]: value,
+      };
+      setFormData((prev) => ({ ...prev, content: updatedContent }));
+      setUnsavedChanges(true);
+    },
+    [formData.content],
+  );
 
-  const removeContentBlock = useCallback((index) => {
-    const updatedContent = formData.content.filter((_, i) => i !== index);
-    setFormData(prev => ({ ...prev, content: updatedContent }));
-    setUnsavedChanges(true);
-  }, [formData.content]);
+  const removeContentBlock = useCallback(
+    (index) => {
+      const updatedContent = formData.content.filter((_, i) => i !== index);
+      setFormData((prev) => ({ ...prev, content: updatedContent }));
+      setUnsavedChanges(true);
+    },
+    [formData.content],
+  );
 
-  const moveContentBlock = useCallback((index, direction) => {
-    if (
-      (direction === 'up' && index === 0) ||
-      (direction === 'down' && index === formData.content.length - 1)
-    ) return;
+  const moveContentBlock = useCallback(
+    (index, direction) => {
+      if (
+        (direction === "up" && index === 0) ||
+        (direction === "down" && index === formData.content.length - 1)
+      )
+        return;
 
-    const updatedContent = [...formData.content];
-    const newIndex = direction === 'up' ? index - 1 : index + 1;
-    [updatedContent[index], updatedContent[newIndex]] =
-      [updatedContent[newIndex], updatedContent[index]];
+      const updatedContent = [...formData.content];
+      const newIndex = direction === "up" ? index - 1 : index + 1;
+      [updatedContent[index], updatedContent[newIndex]] = [
+        updatedContent[newIndex],
+        updatedContent[index],
+      ];
 
-    setFormData(prev => ({ ...prev, content: updatedContent }));
-    setUnsavedChanges(true);
-  }, [formData.content]);
+      setFormData((prev) => ({ ...prev, content: updatedContent }));
+      setUnsavedChanges(true);
+    },
+    [formData.content],
+  );
 
   // ✅ Validate form data
   const validateFormData = () => {
@@ -280,10 +295,12 @@ const BlogManagePage = () => {
     if (!formData.date) errors.push("Publish date is required");
 
     const emptyContentBlocks = formData.content.filter(
-      block => !block.text?.trim() && !block.imageUrl?.trim()
+      (block) => !block.text?.trim() && !block.imageUrl?.trim(),
     );
     if (emptyContentBlocks.length > 0) {
-      errors.push(`${emptyContentBlocks.length} content block(s) are empty - please fill them or remove them`);
+      errors.push(
+        `${emptyContentBlocks.length} content block(s) are empty - please fill them or remove them`,
+      );
     }
 
     if (formData.content.length === 0) {
@@ -301,25 +318,25 @@ const BlogManagePage = () => {
       author: {
         name: "",
         role: "",
-        avatar: ""
+        avatar: "",
       },
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split("T")[0],
       readTime: "",
       tags: [],
       category: "",
       content: [],
       gallery: [],
       videoUrl: "",
-      shortDescription: ""
+      shortDescription: "",
     });
     setEditingId(null);
     setTagInput("");
     setUnsavedChanges(false);
 
     // Reset file inputs
-    if (coverImageInputRef.current) coverImageInputRef.current.value = '';
-    if (authorAvatarInputRef.current) authorAvatarInputRef.current.value = '';
-    if (galleryInputRef.current) galleryInputRef.current.value = '';
+    if (coverImageInputRef.current) coverImageInputRef.current.value = "";
+    if (authorAvatarInputRef.current) authorAvatarInputRef.current.value = "";
+    if (galleryInputRef.current) galleryInputRef.current.value = "";
   };
 
   // ✅ Handle submit with validation
@@ -337,15 +354,15 @@ const BlogManagePage = () => {
     const formattedData = {
       ...formData,
       date: new Date(formData.date).toLocaleDateString(
-        navigator.language || 'en-US',
+        navigator.language || "en-US",
         {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        }
-      )
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        },
+      ),
     };
-   // console.log(formData)
+    // console.log(formData)
 
     try {
       if (editingId) {
@@ -355,9 +372,11 @@ const BlogManagePage = () => {
         await AxiosSecure.post("/api/blogs", formattedData);
         showMessage("✅ Blog added successfully!");
       }
+      await fetch(`/api/revalidate?tag=blogs`);
+      await fetch(`/api/revalidate?tag=blog-${editingId || "new"}`);
 
       resetForm();
-      fetchBlogs();
+      await fetchBlogs();
     } catch (error) {
       console.error(error.message);
       const errorMsg = error.response?.data?.message || "Failed to save blog";
@@ -367,13 +386,12 @@ const BlogManagePage = () => {
     }
   };
 
-
-
-
-
   // ✅ Cancel edit with unsaved changes check
   const handleCancelEdit = () => {
-    if (unsavedChanges && !confirm("You have unsaved changes. Are you sure you want to cancel?")) {
+    if (
+      unsavedChanges &&
+      !confirm("You have unsaved changes. Are you sure you want to cancel?")
+    ) {
       return;
     }
     resetForm();
@@ -383,59 +401,75 @@ const BlogManagePage = () => {
   // ✅ Remove gallery image
   const removeGalleryImage = (index) => {
     const updatedGallery = formData.gallery.filter((_, i) => i !== index);
-    setFormData(prev => ({ ...prev, gallery: updatedGallery }));
+    setFormData((prev) => ({ ...prev, gallery: updatedGallery }));
     setUnsavedChanges(true);
   };
 
   // ✅ Handle content image upload
-  const handleContentImageUpload = useCallback(async (e, index) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  const handleContentImageUpload = useCallback(
+    async (e, index) => {
+      const file = e.target.files[0];
+      if (!file) return;
 
-    if (!isValidImageFile(file)) {
-      e.target.value = '';
-      return;
-    }
+      if (!isValidImageFile(file)) {
+        e.target.value = "";
+        return;
+      }
 
-    try {
-      setImageLoading(true);
-      const imageUrl = await uploadImageToImgBB(file);
-      updateContentBlock(index, 'imageUrl', imageUrl);
-      showMessage("✅ Image added to content!");
-    } catch (error) {
-      console.error(error);
-      showMessage("❌ Image upload failed", "error");
-    } finally {
-      setImageLoading(false);
-      e.target.value = '';
-    }
-  }, [updateContentBlock]);
+      try {
+        setImageLoading(true);
+        const imageUrl = await uploadImageToImgBB(file);
+        updateContentBlock(index, "imageUrl", imageUrl);
+        showMessage("✅ Image added to content!");
+      } catch (error) {
+        console.error(error);
+        showMessage("❌ Image upload failed", "error");
+      } finally {
+        setImageLoading(false);
+        e.target.value = "";
+      }
+    },
+    [updateContentBlock],
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-8 px-4">
       <div className="max-w-7xl mx-auto justify-center items-center">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">📝 Blog Management</h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+            📝 Blog Management
+          </h1>
           <p className="text-gray-600 text-lg">
-            {editingId ? "Edit existing blog post" : "Create and manage blog posts"}
+            {editingId
+              ? "Edit existing blog post"
+              : "Create and manage blog posts"}
           </p>
           {unsavedChanges && (
-            <p className="text-orange-600 text-sm mt-2">⚠️ You have unsaved changes</p>
+            <p className="text-orange-600 text-sm mt-2">
+              ⚠️ You have unsaved changes
+            </p>
           )}
         </div>
 
         {/* Alert Message */}
         {message.text && (
-          <div className={`mb-6 p-4 rounded-lg border-l-4 ${message.type === "error"
-            ? "bg-red-50 border-red-500 text-red-700"
-            : message.type === "info"
-              ? "bg-blue-50 border-blue-500 text-blue-700"
-              : "bg-green-50 border-green-500 text-green-700"
-            }`}>
+          <div
+            className={`mb-6 p-4 rounded-lg border-l-4 ${
+              message.type === "error"
+                ? "bg-red-50 border-red-500 text-red-700"
+                : message.type === "info"
+                  ? "bg-blue-50 border-blue-500 text-blue-700"
+                  : "bg-green-50 border-green-500 text-green-700"
+            }`}
+          >
             <div className="flex items-center">
               <span className="text-lg mr-2">
-                {message.type === "error" ? "❌" : message.type === "info" ? "ℹ️" : "✅"}
+                {message.type === "error"
+                  ? "❌"
+                  : message.type === "info"
+                    ? "ℹ️"
+                    : "✅"}
               </span>
               <span className="font-medium">{message.text}</span>
             </div>
@@ -465,7 +499,9 @@ const BlogManagePage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Title */}
                 <div className="md:col-span-2">
-                  <label className="block text-gray-700 font-medium mb-2">Blog Title *</label>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Blog Title *
+                  </label>
                   <input
                     type="text"
                     name="title"
@@ -480,7 +516,9 @@ const BlogManagePage = () => {
 
                 {/* Category & Read Time */}
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">Category *</label>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Category *
+                  </label>
                   <input
                     type="text"
                     name="category"
@@ -494,7 +532,9 @@ const BlogManagePage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">Read Time</label>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Read Time
+                  </label>
                   <input
                     type="text"
                     name="readTime"
@@ -508,7 +548,9 @@ const BlogManagePage = () => {
 
                 {/* Date */}
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">Publish Date *</label>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Publish Date *
+                  </label>
                   <input
                     type="date"
                     name="date"
@@ -522,7 +564,9 @@ const BlogManagePage = () => {
 
                 {/* Video URL */}
                 <div>
-                  <label className="block text-gray-700 font-medium mb-2">Video URL (Optional)</label>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Video URL (Optional)
+                  </label>
                   <input
                     type="text"
                     name="videoUrl"
@@ -537,7 +581,9 @@ const BlogManagePage = () => {
 
               {/* Tags */}
               <div>
-                <label className="block text-gray-700 font-medium mb-2">Tags</label>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Tags
+                </label>
                 <div className="space-y-2">
                   <input
                     type="text"
@@ -571,10 +617,14 @@ const BlogManagePage = () => {
 
               {/* Author Information */}
               <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">👤 Author Information</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                  👤 Author Information
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-gray-700 font-medium mb-2">Author Name *</label>
+                    <label className="block text-gray-700 font-medium mb-2">
+                      Author Name *
+                    </label>
                     <input
                       type="text"
                       name="author.name"
@@ -587,7 +637,9 @@ const BlogManagePage = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700 font-medium mb-2">Author Role</label>
+                    <label className="block text-gray-700 font-medium mb-2">
+                      Author Role
+                    </label>
                     <input
                       type="text"
                       name="author.role"
@@ -599,7 +651,9 @@ const BlogManagePage = () => {
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-gray-700 font-medium mb-2">Author Avatar</label>
+                    <label className="block text-gray-700 font-medium mb-2">
+                      Author Avatar
+                    </label>
                     <div className="flex items-center space-x-4">
                       <input
                         ref={authorAvatarInputRef}
@@ -623,7 +677,9 @@ const BlogManagePage = () => {
 
               {/* Cover Image */}
               <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">🖼️ Cover Image *</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                  🖼️ Cover Image *
+                </h3>
                 <div className="space-y-3">
                   <input
                     ref={coverImageInputRef}
@@ -638,13 +694,17 @@ const BlogManagePage = () => {
                   {imageLoading && (
                     <div className="flex items-center justify-center p-4">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                      <span className="ml-3 text-gray-600">Uploading image...</span>
+                      <span className="ml-3 text-gray-600">
+                        Uploading image...
+                      </span>
                     </div>
                   )}
 
                   {formData.coverImage && (
                     <div className="mt-2">
-                      <p className="text-sm text-green-600 mb-2">✅ Cover image ready!</p>
+                      <p className="text-sm text-green-600 mb-2">
+                        ✅ Cover image ready!
+                      </p>
                       <img
                         src={formData.coverImage}
                         alt="Cover preview"
@@ -656,30 +716,31 @@ const BlogManagePage = () => {
               </div>
 
               <div className="mb-4">
-                      <label className="block text-gray-700 font-medium mb-2">
-                        Short Description
-                      </label>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Short Description
+                </label>
 
-                      <textarea
-                        name="shortDescription"
-                        value={formData.shortDescription}
-                        onChange={handleChange}
-                        placeholder="e.g., Blog short description (around 100 words)..."
-                        rows={4}
-                        className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
-                        aria-label="Short description"
-                      />
-                    </div>
-
+                <textarea
+                  name="shortDescription"
+                  value={formData.shortDescription}
+                  onChange={handleChange}
+                  placeholder="e.g., Blog short description (around 100 words)..."
+                  rows={4}
+                  className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
+                  aria-label="Short description"
+                />
+              </div>
 
               {/* Content Blocks */}
               <div className="border-t pt-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-800">📄 Content</h3>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    📄 Content
+                  </h3>
                   <div className="flex space-x-2">
                     <button
                       type="button"
-                      onClick={() => addContentBlock('heading')}
+                      onClick={() => addContentBlock("heading")}
                       className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition"
                       aria-label="Add heading block"
                     >
@@ -687,7 +748,7 @@ const BlogManagePage = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => addContentBlock('paragraph')}
+                      onClick={() => addContentBlock("paragraph")}
                       className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition"
                       aria-label="Add paragraph block"
                     >
@@ -695,7 +756,7 @@ const BlogManagePage = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => addContentBlock('blockquote')}
+                      onClick={() => addContentBlock("blockquote")}
                       className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition"
                       aria-label="Add quote block"
                     >
@@ -703,7 +764,7 @@ const BlogManagePage = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => addContentBlock('image')}
+                      onClick={() => addContentBlock("image")}
                       className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition"
                       aria-label="Add image block"
                     >
@@ -714,7 +775,10 @@ const BlogManagePage = () => {
 
                 <div className="space-y-4">
                   {formData.content.map((block, index) => (
-                    <div key={block._id || index} className="border border-gray-200 rounded-xl p-4 bg-gray-50">
+                    <div
+                      key={block._id || index}
+                      className="border border-gray-200 rounded-xl p-4 bg-gray-50"
+                    >
                       <div className="flex items-center justify-between mb-3">
                         <span className="text-sm font-medium text-gray-600 capitalize">
                           {block.type}
@@ -722,7 +786,7 @@ const BlogManagePage = () => {
                         <div className="flex space-x-2">
                           <button
                             type="button"
-                            onClick={() => moveContentBlock(index, 'up')}
+                            onClick={() => moveContentBlock(index, "up")}
                             disabled={index === 0}
                             className="px-2 py-1 text-xs bg-white border border-gray-300 rounded disabled:opacity-50"
                             aria-label="Move content block up"
@@ -731,7 +795,7 @@ const BlogManagePage = () => {
                           </button>
                           <button
                             type="button"
-                            onClick={() => moveContentBlock(index, 'down')}
+                            onClick={() => moveContentBlock(index, "down")}
                             disabled={index === formData.content.length - 1}
                             className="px-2 py-1 text-xs bg-white border border-gray-300 rounded disabled:opacity-50"
                             aria-label="Move content block down"
@@ -749,7 +813,7 @@ const BlogManagePage = () => {
                         </div>
                       </div>
 
-                      {block.type === 'image' ? (
+                      {block.type === "image" ? (
                         <div>
                           <input
                             type="file"
@@ -769,10 +833,12 @@ const BlogManagePage = () => {
                       ) : (
                         <textarea
                           value={block.text}
-                          onChange={(e) => updateContentBlock(index, 'text', e.target.value)}
+                          onChange={(e) =>
+                            updateContentBlock(index, "text", e.target.value)
+                          }
                           placeholder={`Enter ${block.type} text...`}
                           className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-vertical min-h-[80px]"
-                          rows={block.type === 'paragraph' ? 3 : 2}
+                          rows={block.type === "paragraph" ? 3 : 2}
                           aria-label={`${block.type} content for block ${index + 1}`}
                         />
                       )}
@@ -781,7 +847,10 @@ const BlogManagePage = () => {
 
                   {formData.content.length === 0 && (
                     <div className="text-center py-8 text-gray-500">
-                      <p>No content added yet. Start by adding a heading or paragraph!</p>
+                      <p>
+                        No content added yet. Start by adding a heading or
+                        paragraph!
+                      </p>
                     </div>
                   )}
                 </div>
@@ -789,7 +858,9 @@ const BlogManagePage = () => {
 
               {/* Gallery */}
               <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">🖼️ Gallery Images</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                  🖼️ Gallery Images
+                </h3>
                 <div className="space-y-3">
                   <input
                     ref={galleryInputRef}
@@ -827,12 +898,13 @@ const BlogManagePage = () => {
               <button
                 type="submit"
                 disabled={isLoading || imageLoading}
-                className={`w-full py-3 px-6 rounded-xl font-semibold text-white transition-all duration-200 ${isLoading || imageLoading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : editingId
-                    ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                    : "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                  }`}
+                className={`w-full py-3 px-6 rounded-xl font-semibold text-white transition-all duration-200 ${
+                  isLoading || imageLoading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : editingId
+                      ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                      : "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                }`}
                 aria-label={editingId ? "Update blog post" : "Create blog post"}
               >
                 {isLoading ? (
@@ -848,9 +920,11 @@ const BlogManagePage = () => {
               </button>
             </form>
           </div>
-
         </div>
-        <BlogList setEditingId={setEditingId} setFormData={setFormData}  ></BlogList>
+        <BlogList
+          setEditingId={setEditingId}
+          setFormData={setFormData}
+        ></BlogList>
       </div>
     </div>
   );
