@@ -5,7 +5,6 @@ export async function middleware(req) {
 
    const { pathname } = req.nextUrl;
 
-  // ✅ Allow login page & login API
   if (
     pathname === "/admin-login" ||
     pathname === "/api/admin/login" ||
@@ -15,7 +14,6 @@ export async function middleware(req) {
   }
   const token = req.cookies.get("token")?.value;
 
-  //console.log("Middleware token:", token);
 
   if (!token) {
     return NextResponse.redirect(new URL("/admin-login", req.url));
@@ -40,3 +38,4 @@ export async function middleware(req) {
 export const config = {
   matcher: ["/admin/:path*" , "/api/admin/:path*"],
 };
+
