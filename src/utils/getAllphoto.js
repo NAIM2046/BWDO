@@ -3,7 +3,7 @@ export default async function getAllphoto() {
         // ডাইনামিক URL: লোকাল পিসি নাকি লাইভ সার্ভার, সেটি নিজে থেকেই চেক করবে
         const baseUrl = process.env.NODE_ENV === 'development' 
             ? 'http://localhost:3000' // 💻 আপনার লোকাল পিসির জন্য 
-            : 'http://127.0.0.1:8083'; // 🌐 লাইভ সার্ভারের (VPS) জন্য
+            : process.env.NEXT_PUBLIC_API_URL; // 🌐 লাইভ সার্ভারের (VPS) জন্য
 
         const res = await fetch(`${baseUrl}/api/images`, {
             next: [{tags: ['images']}] 

@@ -3,7 +3,7 @@ export default async function getAllblogInfo() {
         // ডাইনামিক URL: লোকাল পিসি নাকি লাইভ সার্ভার, সেটা নিজে থেকেই চেক করবে
         const baseUrl = process.env.NODE_ENV === 'development' 
             ? 'http://localhost:3000' // 💻 আপনার লোকাল পিসির জন্য (পোর্ট অন্য হলে পাল্টে দেবেন)
-            : 'http://127.0.0.1:8083'; // 🌐 লাইভ সার্ভারের (VPS) জন্য
+            : process.env.NEXT_PUBLIC_API_URL; // 🌐 লাইভ সার্ভারের (VPS) জন্য
 
         const res = await fetch(`${baseUrl}/api/blogs`, {
            next: { tags: ['blogs'] } // এই ট্যাগ দিয়ে ব্লগের ক্যাশ ম্যানেজ করা হবে
