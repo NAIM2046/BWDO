@@ -50,6 +50,7 @@ export const metadata = {
 
 export default async function Home() {
   const slides = await getSlideInfo();
+  console.log("Fetched slides for homepage:", slides); // Debug log to verify slide data
 
   // 2. Structured Data (JSON-LD) - USE ABSOLUTE PATHS
   const jsonLd = {
