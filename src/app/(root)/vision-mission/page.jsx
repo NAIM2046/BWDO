@@ -74,7 +74,7 @@ const AboutVisionMissionPage = () => {
     name: "BWDO",
     description:
       "Brotherhood Welfare and Development Organization is a non-profit dedicated to equality and youth empowerment.",
-    url: "https://www.bwdobd.com/vision-mission",
+    url: "https://www.bwdobd.org/vision-mission",
   };
 
   const colorClasses = {

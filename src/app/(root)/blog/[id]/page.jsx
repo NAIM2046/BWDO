@@ -17,12 +17,12 @@ export async function generateMetadata({ params }) {
     title: `${blog.title} | BWDO Blog`,
     description: blog.excerpt || blog.content?.[0]?.text?.substring(0, 160),
     alternates: {
-      canonical: `https://www.bwdobd.com/blog/${id}`,
+      canonical: `https://www.bwdobd.org/blog/${id}`,
     },
     openGraph: {
       title: blog.title,
       description: blog.excerpt || "Read more about this initiative by BWDO.",
-      url: `https://www.bwdobd.com/blog/${id}`,
+      url: `https://www.bwdobd.org/blog/${id}`,
       type: "article",
       publishedTime: blog.date,
       authors: [blog.author.name],
@@ -65,7 +65,7 @@ export default async function BlogDetailPage({ params }) {
       name: "BWDO",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.bwdobd.com/logo.png",
+        url: "https://www.bwdobd.org/logo.png",
       },
     },
     datePublished: blogDetail.date,

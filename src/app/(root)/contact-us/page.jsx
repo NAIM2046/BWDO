@@ -11,7 +11,7 @@ export const metadata = {
     "Donate to BWDO",
   ],
   alternates: {
-    canonical: "https://www.bwdobd.com/contact-us",
+    canonical: "https://www.bwdobd.org/contact-us",
   },
 };
 
@@ -29,7 +29,7 @@ const ContactUsPage = () => {
     },
     telephone: "+8801979438984",
     email: "officialbrotherhood2016@gmail.com",
-    url: "https://www.bwdobd.com/contact-us",
+    url: "https://www.bwdobd.org/contact-us",
   };
 
   return (

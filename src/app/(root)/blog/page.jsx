@@ -14,13 +14,13 @@ export const metadata = {
     "Community Development",
   ],
   alternates: {
-    canonical: "https://www.bwdobd.com/blog",
+    canonical: "https://www.bwdobd.org/blog",
   },
   openGraph: {
     title: "BWDO Official Blog - Stories of Change",
     description:
       "Read about our impact on education, health, and conservation in Bangladesh.",
-    url: "https://www.bwdobd.com/blog",
+    url: "https://www.bwdobd.org/blog",
     type: "website",
     siteName: "BWDO",
   },
@@ -35,11 +35,11 @@ const BlogPage = async () => {
     name: "BWDO Official Blog",
     description:
       "Latest news and articles from Brotherhood Welfare Development Organization.",
-    url: "https://www.bwdobd.com/blog",
+    url: "https://www.bwdobd.org/blog",
     blogPost: BlogList?.map((blog) => ({
       "@type": "BlogPosting",
       headline: blog.title,
-      url: `https://www.bwdobd.com/blog/${blog._id}`,
+      url: `https://www.bwdobd.org/blog/${blog._id}`,
       datePublished: blog.date,
     })),
   };

@@ -20,13 +20,13 @@ export const metadata = {
     "Donate to Education Bangladesh",
   ],
   alternates: {
-    canonical: "https://www.bwdobd.com",
+    canonical: "https://www.bwdobd.org",
   },
   openGraph: {
     title: "Support BWDO | Brotherhood Welfare Development Organization",
     description:
       "Join our mission to empower underprivileged communities in Bangladesh.",
-    url: "https://www.bwdobd.com",
+    url: "https://www.bwdobd.org",
     siteName: "BWDO Bangladesh",
     images: [
       {
@@ -58,8 +58,8 @@ export default async function Home() {
     "@type": "NGO",
     name: "Brotherhood Welfare Development Organization",
     alternateName: "BWDO",
-    url: "https://www.bwdobd.com",
-    logo: "https://www.bwdobd.com/logo.png", // Ensure this absolute URL is correct
+    url: "https://www.bwdobd.org",
+    logo: "https://www.bwdobd.org/logo.png", // Ensure this absolute URL is correct
     description:
       "A leading non-profit organization in Bangladesh focused on social welfare, health, and education.",
     address: {
