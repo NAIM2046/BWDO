@@ -21,17 +21,17 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           port: 22
           script: |
+            set -e  # 🚨 stop if any command fails
 
             cd /var/www/bwdo
 
-
+            git reset --hard
             git pull origin main
-
 
             npm install
 
-
+            rm -rf .next
             npm run build
 
-            node scripts/seed.js
             pm2 restart bwdo
+            pm2 save
